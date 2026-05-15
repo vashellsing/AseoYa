@@ -1,0 +1,3603 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#0a3d2e" />
+    <title>AseoYa</title>
+    <link rel="manifest" href="./manifest.json" />
+    <style>
+      /* ═══ TOKENS ═══ */
+      :root {
+        --forest: #0a3d2e;
+        --leaf: #1a6647;
+        --sage: #2d9e6b;
+        --mint: #c8f0dc;
+        --pale: #f0faf4;
+        --paper: #f8faf9;
+        --white: #ffffff;
+        --ink: #0f1f18;
+        --slate: #3a5248;
+        --mist: #7a9a8c;
+        --border: #dce9e3;
+        --gold: #c9922a;
+        --gold-lt: #fef3e2;
+        --gold-dk: #7a5200;
+        --amber: #e07a20;
+        --red: #c0392b;
+        --red-lt: #fdecea;
+        --nequi: #6b2d8b;
+        --davi: #e8000d;
+        --pse: #003087;
+        --shadow-sm:
+          0 1px 3px rgba(10, 61, 46, 0.06), 0 4px 12px rgba(10, 61, 46, 0.05);
+        --shadow-md:
+          0 4px 16px rgba(10, 61, 46, 0.1), 0 1px 3px rgba(10, 61, 46, 0.06);
+        --shadow-lg: 0 8px 32px rgba(10, 61, 46, 0.14);
+        --r-sm: 12px;
+        --r-md: 16px;
+        --r-lg: 24px;
+        --r-xl: 32px;
+        --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+        --font-display: "DM Serif Display", Georgia, serif;
+        --t-xs: 12px;
+        --t-sm: 14px;
+        --t-base: 16px;
+        --t-md: 18px;
+        --t-lg: 22px;
+        --t-xl: 28px;
+        --t-2xl: 36px;
+      }
+      body.mode-senior {
+        --t-xs: 14px;
+        --t-sm: 16px;
+        --t-base: 19px;
+        --t-md: 22px;
+        --t-lg: 26px;
+        --t-xl: 32px;
+        --t-2xl: 40px;
+      }
+      body.mode-expert {
+        --t-xs: 11px;
+        --t-sm: 13px;
+        --t-base: 15px;
+        --t-md: 17px;
+        --t-lg: 20px;
+        --t-xl: 26px;
+        --t-2xl: 34px;
+      }
+
+      /* ═══ RESET ═══ */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+      }
+      html {
+        height: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+      body {
+        font-family: var(--font-body);
+        font-size: var(--t-base);
+        background: var(--paper);
+        color: var(--ink);
+        min-height: 100%;
+        max-width: 430px;
+        margin: 0 auto;
+        overflow-x: hidden;
+        position: relative;
+        padding-bottom: env(safe-area-inset-bottom);
+        -webkit-font-smoothing: antialiased;
+        touch-action: pan-y;
+      }
+
+      /* ═══ AUTH SCREEN (Splash / Login / Registro) ═══ */
+      #auth-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 700;
+        background: linear-gradient(160deg, var(--forest) 0%, #07271c 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        padding-top: max(60px, env(safe-area-inset-top));
+        padding-bottom: max(48px, env(safe-area-inset-bottom));
+        text-align: center;
+        overflow: hidden;
+      }
+      #auth-splash::before {
+        content: "";
+        position: absolute;
+        top: -80px;
+        right: -80px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: rgba(45, 158, 107, 0.12);
+        pointer-events: none;
+      }
+      #auth-splash::after {
+        content: "";
+        position: absolute;
+        bottom: -60px;
+        left: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(45, 158, 107, 0.08);
+        pointer-events: none;
+      }
+      .splash-top {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .splash-logo {
+        width: 88px;
+        height: 88px;
+        background: var(--sage);
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 28px;
+        box-shadow: 0 12px 40px rgba(45, 158, 107, 0.45);
+      }
+      .splash-logo svg {
+        width: 50px;
+        height: 50px;
+        fill: #fff;
+      }
+      .splash-title {
+        font-family: var(--font-display);
+        font-size: 52px;
+        color: #fff;
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+      }
+      .splash-sub {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: var(--t-base);
+        line-height: 1.5;
+        max-width: 260px;
+      }
+
+      .splash-actions {
+        width: 100%;
+      }
+      .splash-actions p {
+        color: rgba(255, 255, 255, 0.45);
+        font-size: var(--t-xs);
+        margin-bottom: 18px;
+      }
+      .auth-btn-primary {
+        display: block;
+        width: 100%;
+        padding: 18px;
+        background: var(--sage);
+        border: none;
+        border-radius: var(--r-md);
+        color: #fff;
+        font-size: var(--t-md);
+        font-weight: 700;
+        font-family: var(--font-body);
+        cursor: pointer;
+        margin-bottom: 12px;
+        transition: all 0.18s ease;
+        -webkit-appearance: none;
+        box-shadow: 0 4px 20px rgba(45, 158, 107, 0.4);
+        min-height: 58px;
+      }
+      .auth-btn-primary:active {
+        transform: scale(0.98);
+        background: #1e7a58;
+      }
+      .auth-btn-outline {
+        display: block;
+        width: 100%;
+        padding: 18px;
+        background: transparent;
+        border: 2px solid rgba(255, 255, 255, 0.35);
+        border-radius: var(--r-md);
+        color: #fff;
+        font-size: var(--t-md);
+        font-weight: 600;
+        font-family: var(--font-body);
+        cursor: pointer;
+        margin-bottom: 12px;
+        transition: all 0.18s ease;
+        -webkit-appearance: none;
+        min-height: 58px;
+      }
+      .auth-btn-outline:active {
+        transform: scale(0.98);
+        border-color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* ═══ AUTH MODAL (Login / Register / Plan / Pago) ═══ */
+      #auth-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 800;
+        background: rgba(7, 39, 28, 0.85);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        display: none;
+        align-items: flex-end;
+        justify-content: center;
+      }
+      #auth-modal.open {
+        display: flex;
+        animation: fadeIn 0.2s ease;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+      }
+      .auth-sheet {
+        background: var(--white);
+        border-radius: var(--r-xl) var(--r-xl) 0 0;
+        padding: 28px 24px;
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+        width: 100%;
+        max-width: 430px;
+        max-height: 93vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      @keyframes slideUp {
+        from {
+          transform: translateY(100%);
+        }
+      }
+      .auth-handle {
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--border);
+        margin: 0 auto 24px;
+      }
+
+      /* Auth steps */
+      .auth-step {
+        display: none;
+        animation: fadeUp 0.25s ease;
+      }
+      .auth-step.active {
+        display: block;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .auth-logo-sm {
+        width: 56px;
+        height: 56px;
+        background: var(--leaf);
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        box-shadow: 0 6px 20px rgba(26, 102, 71, 0.35);
+      }
+      .auth-logo-sm svg {
+        width: 30px;
+        height: 30px;
+        fill: #fff;
+      }
+      .auth-sheet h2 {
+        font-size: var(--t-xl);
+        font-weight: 800;
+        color: var(--ink);
+        margin-bottom: 6px;
+        text-align: center;
+      }
+      .auth-sheet .auth-desc {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        text-align: center;
+        margin-bottom: 24px;
+        line-height: 1.5;
+      }
+
+      .auth-field {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 14px;
+      }
+      .auth-field label {
+        font-size: var(--t-sm);
+        font-weight: 600;
+        color: var(--slate);
+        margin-bottom: 6px;
+      }
+      .auth-field input {
+        width: 100%;
+        padding: 16px 18px;
+        font-size: var(--t-base);
+        font-family: var(--font-body);
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        background: var(--pale);
+        color: var(--ink);
+        -webkit-appearance: none;
+        transition: border-color 0.2s;
+        min-height: 54px;
+      }
+      .auth-field input:focus {
+        outline: none;
+        border-color: var(--sage);
+        background: #fff;
+      }
+
+      .auth-sheet-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 18px;
+        border-radius: var(--r-md);
+        font-size: var(--t-md);
+        font-weight: 700;
+        font-family: var(--font-body);
+        border: none;
+        cursor: pointer;
+        margin-bottom: 10px;
+        min-height: 58px;
+        transition: all 0.18s ease;
+        -webkit-appearance: none;
+      }
+      .auth-sheet-btn:active {
+        transform: scale(0.98);
+      }
+      .asb-green {
+        background: var(--leaf);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(26, 102, 71, 0.35);
+      }
+      .asb-outline {
+        background: #fff;
+        color: var(--leaf);
+        border: 2px solid var(--leaf) !important;
+      }
+      .asb-gold {
+        background: linear-gradient(135deg, #f0c060, #c9922a);
+        color: var(--gold-dk);
+        box-shadow: 0 4px 14px rgba(201, 146, 42, 0.3);
+      }
+      .asb-ghost {
+        background: var(--pale);
+        color: var(--slate);
+      }
+
+      .auth-link {
+        text-align: center;
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-top: 8px;
+      }
+      .auth-link span {
+        color: var(--leaf);
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      /* Plan cards */
+      .plan-card {
+        border-radius: var(--r-md);
+        border: 2px solid var(--border);
+        padding: 20px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        position: relative;
+      }
+      .plan-card.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .plan-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 8px;
+      }
+      .plan-name {
+        font-size: var(--t-md);
+        font-weight: 800;
+      }
+      .plan-price {
+        font-size: var(--t-md);
+        font-weight: 800;
+        color: var(--leaf);
+      }
+      .plan-price span {
+        font-size: var(--t-xs);
+        font-weight: 500;
+        color: var(--mist);
+      }
+      .plan-desc {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        line-height: 1.5;
+      }
+      .plan-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: linear-gradient(135deg, #f0c060, #c9922a);
+        color: var(--gold-dk);
+        font-size: var(--t-xs);
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+      }
+      .plan-card-premium {
+        background: linear-gradient(135deg, #fef9ef, #fffde7);
+        border-color: rgba(201, 146, 42, 0.4);
+      }
+      .plan-card-premium.selected {
+        border-color: var(--gold);
+      }
+      .plan-check {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .plan-card.selected .plan-check {
+        background: var(--sage);
+        border-color: var(--sage);
+      }
+      .plan-card-premium.selected .plan-check {
+        background: var(--gold);
+        border-color: var(--gold);
+      }
+      .plan-check svg {
+        width: 12px;
+        height: 12px;
+        stroke: #fff;
+        stroke-width: 3;
+        fill: none;
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .plan-card.selected .plan-check svg {
+        opacity: 1;
+      }
+
+      /* Payment methods */
+      .pay-method {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px 18px;
+        border-radius: var(--r-sm);
+        border: 2px solid var(--border);
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.18s ease;
+        background: #fff;
+        min-height: 64px;
+      }
+      .pay-method:active {
+        transform: scale(0.98);
+      }
+      .pay-method.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .pay-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 13px;
+        flex-shrink: 0;
+        letter-spacing: 0.5px;
+      }
+      .pay-icon-nequi {
+        background: #6b2d8b;
+        color: #fff;
+      }
+      .pay-icon-davi {
+        background: #e8000d;
+        color: #fff;
+      }
+      .pay-icon-pse {
+        background: #003087;
+        color: #fff;
+      }
+      .pay-icon-card {
+        background: linear-gradient(135deg, #1a6647, #2d9e6b);
+        color: #fff;
+      }
+      .pay-icon-transfer {
+        background: #2c3e50;
+        color: #fff;
+      }
+      .pay-info {
+        flex: 1;
+      }
+      .pay-name {
+        font-size: var(--t-base);
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .pay-sub {
+        font-size: var(--t-xs);
+        color: var(--mist);
+        margin-top: 2px;
+      }
+      .pay-check {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .pay-method.selected .pay-check {
+        background: var(--sage);
+        border-color: var(--sage);
+        box-shadow: inset 0 0 0 3px #fff;
+      }
+
+      /* Error message */
+      .auth-error {
+        background: var(--red-lt);
+        border: 1px solid rgba(192, 57, 43, 0.25);
+        border-radius: var(--r-sm);
+        padding: 12px 14px;
+        font-size: var(--t-sm);
+        color: var(--red);
+        margin-bottom: 14px;
+        display: none;
+      }
+
+      /* ═══ STATUS BAR ═══ */
+      .status-bar {
+        background: var(--forest);
+        color: #fff;
+        padding: 14px 20px 10px;
+        padding-top: max(14px, env(safe-area-inset-top));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: var(--t-xs);
+        font-weight: 500;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .sb-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .sb-battery {
+        width: 20px;
+        height: 10px;
+        border: 1.5px solid rgba(255, 255, 255, 0.7);
+        border-radius: 2px;
+        position: relative;
+      }
+      .sb-battery::after {
+        content: "";
+        position: absolute;
+        right: -4px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 2px;
+        height: 5px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 0 1px 1px 0;
+      }
+      .sb-battery-fill {
+        position: absolute;
+        inset: 1.5px;
+        background: #fff;
+        width: 70%;
+        border-radius: 1px;
+      }
+
+      /* ═══ SCREENS ═══ */
+      .screen {
+        display: none;
+        min-height: calc(100vh - 130px);
+        padding-bottom: 90px;
+        animation: fadeUp 0.28s ease both;
+      }
+      .screen.active {
+        display: block;
+      }
+
+      /* ═══ HEADER ═══ */
+      .hdr {
+        background: var(--forest);
+        padding: 22px 20px 28px;
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+      }
+      .hdr::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        right: -40px;
+        width: 140px;
+        height: 140px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 50%;
+      }
+      .hdr-greeting {
+        font-size: var(--t-sm);
+        color: rgba(255, 255, 255, 0.65);
+        margin-bottom: 4px;
+      }
+      .hdr-title {
+        font-family: var(--font-display);
+        font-size: var(--t-xl);
+        line-height: 1.2;
+      }
+      .hdr-sub {
+        font-size: var(--t-sm);
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 5px;
+      }
+      .hdr-plain h1 {
+        font-size: var(--t-xl);
+        font-weight: 700;
+      }
+      .hdr-plain p {
+        font-size: var(--t-sm);
+        color: rgba(255, 255, 255, 0.65);
+        margin-top: 4px;
+      }
+      .badge-premium {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: linear-gradient(135deg, #f0c060, #c9922a);
+        color: var(--gold-dk);
+        font-size: var(--t-xs);
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+        margin-top: 10px;
+        box-shadow: 0 2px 8px rgba(201, 146, 42, 0.3);
+      }
+
+      /* ═══ CONTENT ═══ */
+      .content {
+        padding: 16px;
+      }
+      .card {
+        background: var(--white);
+        border-radius: var(--r-md);
+        padding: 20px;
+        margin-bottom: 14px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+      }
+      .card-premium {
+        background: linear-gradient(135deg, #fef9ef, #fffde7);
+        border: 1.5px solid rgba(201, 146, 42, 0.4);
+      }
+      .card h2 {
+        font-size: var(--t-lg);
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+      .card h3 {
+        font-size: var(--t-md);
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      /* ═══ BUTTONS ═══ */
+      .btn {
+        width: 100%;
+        padding: 17px 20px;
+        font-size: var(--t-md);
+        font-weight: 600;
+        font-family: var(--font-body);
+        border-radius: var(--r-md);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        transition: all 0.18s ease;
+        min-height: 56px;
+        -webkit-appearance: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn-primary {
+        background: var(--leaf);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(26, 102, 71, 0.35);
+      }
+      .btn-outline {
+        background: var(--white);
+        color: var(--leaf);
+        border: 2px solid var(--leaf);
+      }
+      .btn-gold {
+        background: linear-gradient(135deg, #f0c060, #c9922a);
+        color: var(--gold-dk);
+        box-shadow: 0 4px 14px rgba(201, 146, 42, 0.3);
+      }
+      .btn-danger {
+        background: var(--red-lt);
+        color: var(--red);
+        border: 1.5px solid rgba(192, 57, 43, 0.2);
+      }
+      .btn-ghost {
+        background: var(--pale);
+        color: var(--slate);
+      }
+      .btn-sm {
+        padding: 14px 16px;
+        font-size: var(--t-base);
+        font-weight: 600;
+        font-family: var(--font-body);
+        border-radius: var(--r-sm);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        margin-bottom: 10px;
+        min-height: 54px;
+        transition: all 0.18s ease;
+        -webkit-appearance: none;
+        text-align: left;
+      }
+      .btn-sm:active {
+        transform: scale(0.98);
+      }
+      .btn-sm-green {
+        background: var(--pale);
+        color: var(--forest);
+      }
+      .btn-sm-red {
+        background: var(--red-lt);
+        color: var(--red);
+      }
+      .btn-sm-amber {
+        background: #fef3e2;
+        color: var(--amber);
+      }
+      .btn-sm-gray {
+        background: #f2f4f3;
+        color: var(--slate);
+      }
+      .btn-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .btn-icon-red {
+        background: rgba(192, 57, 43, 0.12);
+      }
+      .btn-icon-amber {
+        background: rgba(224, 122, 32, 0.12);
+      }
+      .btn-icon-green {
+        background: rgba(26, 102, 71, 0.1);
+      }
+      .btn-icon-gray {
+        background: rgba(58, 82, 72, 0.1);
+      }
+      .btn-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* ═══ ETA CARD ═══ */
+      .eta-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+      .eta-num {
+        font-family: var(--font-display);
+        font-size: 80px;
+        color: var(--leaf);
+        line-height: 1;
+      }
+      .eta-meta {
+        flex: 1;
+      }
+      .eta-unit {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        font-weight: 500;
+      }
+      .eta-route {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-top: 6px;
+      }
+
+      /* ═══ MAP ═══ */
+      .map-box {
+        background: #d8eee3;
+        border-radius: var(--r-sm);
+        height: 140px;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #b8d9c6;
+        margin: 14px 0;
+      }
+      .map-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
+      .map-road-h {
+        position: absolute;
+        background: #fff;
+        height: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        right: 0;
+        border-radius: 1px;
+      }
+      .map-road-v {
+        position: absolute;
+        background: #fff;
+        width: 8px;
+        left: 32%;
+        top: 0;
+        bottom: 0;
+      }
+      .map-road-v2 {
+        position: absolute;
+        background: #fff;
+        width: 8px;
+        left: 68%;
+        top: 0;
+        bottom: 0;
+      }
+      .map-truck {
+        position: absolute;
+        top: calc(50% - 14px);
+        animation: driveTruck 6s ease-in-out infinite alternate;
+      }
+      .map-truck svg {
+        width: 28px;
+        height: 28px;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+      .map-you {
+        position: absolute;
+        right: 20%;
+        top: calc(50% - 9px);
+        width: 18px;
+        height: 18px;
+        background: var(--leaf);
+        border-radius: 50%;
+        border: 2.5px solid #fff;
+        box-shadow: 0 2px 8px rgba(26, 102, 71, 0.5);
+        animation: youPulse 2.5s infinite;
+      }
+      .map-label {
+        position: absolute;
+        bottom: 8px;
+        left: 8px;
+        background: #fff;
+        border-radius: 8px;
+        padding: 4px 10px;
+        font-size: var(--t-xs);
+        font-weight: 600;
+        color: var(--forest);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+      }
+      @keyframes driveTruck {
+        from {
+          left: 4%;
+        }
+        to {
+          left: 48%;
+        }
+      }
+      @keyframes youPulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(26, 102, 71, 0.5);
+        }
+        60% {
+          box-shadow: 0 0 0 9px rgba(26, 102, 71, 0);
+        }
+      }
+
+      /* ═══ PILLS ═══ */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: var(--t-xs);
+        font-weight: 700;
+      }
+      .pill-green {
+        background: var(--mint);
+        color: var(--forest);
+      }
+      .pill-gray {
+        background: #eef0ef;
+        color: var(--slate);
+      }
+      .pill-gold {
+        background: var(--gold-lt);
+        color: var(--gold-dk);
+      }
+      .pill-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+
+      /* ═══ ALERTS ═══ */
+      .alert {
+        border-radius: var(--r-sm);
+        padding: 14px 16px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .alert-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .alert-icon svg {
+        width: 20px;
+        height: 20px;
+      }
+      .alert-body h3 {
+        font-size: var(--t-base);
+        font-weight: 700;
+      }
+      .alert-body p {
+        font-size: var(--t-sm);
+        margin-top: 3px;
+        line-height: 1.45;
+      }
+      .alert-green {
+        background: var(--pale);
+        border-left: 3px solid var(--sage);
+      }
+      .alert-green .alert-icon {
+        background: var(--mint);
+      }
+      .alert-green .alert-icon svg {
+        stroke: var(--forest);
+      }
+      .alert-amber {
+        background: #fef8f0;
+        border-left: 3px solid var(--amber);
+      }
+      .alert-amber .alert-icon {
+        background: #fdecd6;
+      }
+      .alert-amber .alert-icon svg {
+        stroke: var(--amber);
+      }
+      .alert-gold {
+        background: var(--gold-lt);
+        border-left: 3px solid var(--gold);
+      }
+      .alert-gold .alert-icon {
+        background: rgba(201, 146, 42, 0.15);
+      }
+      .alert-gold .alert-icon svg {
+        stroke: var(--gold);
+      }
+
+      /* ═══ SCHEDULE ═══ */
+      .sched-row {
+        background: var(--white);
+        border-radius: var(--r-sm);
+        padding: 16px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid var(--border);
+      }
+      .sched-row.today {
+        border-left: 3px solid var(--sage);
+      }
+      .sched-day {
+        font-size: var(--t-base);
+        font-weight: 700;
+      }
+      .sched-time {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-top: 3px;
+      }
+
+      /* ═══ COUNTDOWN ═══ */
+      .countdown {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 16px 0;
+      }
+      .cd-box {
+        background: var(--pale);
+        border-radius: var(--r-sm);
+        padding: 14px 18px;
+        text-align: center;
+        min-width: 72px;
+        border: 1px solid var(--border);
+      }
+      .cd-num {
+        font-family: var(--font-display);
+        font-size: 34px;
+        color: var(--forest);
+        line-height: 1;
+      }
+      .cd-lbl {
+        font-size: var(--t-xs);
+        color: var(--mist);
+        font-weight: 600;
+        margin-top: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      /* ═══ SECTION TITLE ═══ */
+      .sec-title {
+        font-size: var(--t-xs);
+        font-weight: 700;
+        color: var(--mist);
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        margin: 22px 0 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* ═══ STATS ═══ */
+      .stat-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .stat-box {
+        background: var(--white);
+        border-radius: var(--r-sm);
+        padding: 18px 16px;
+        text-align: center;
+        border: 1px solid var(--border);
+      }
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: 36px;
+        color: var(--leaf);
+      }
+      .stat-lbl {
+        font-size: var(--t-xs);
+        color: var(--mist);
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      /* ═══ TOGGLE ═══ */
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .toggle-info h3 {
+        font-size: var(--t-base);
+        font-weight: 600;
+      }
+      .toggle-info p {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-top: 2px;
+      }
+      .tog {
+        width: 52px;
+        height: 30px;
+        border-radius: 15px;
+        background: #d0d8d4;
+        position: relative;
+        cursor: pointer;
+        transition: background 0.25s;
+        flex-shrink: 0;
+      }
+      .tog.on {
+        background: var(--sage);
+      }
+      .tog::after {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #fff;
+        transition: transform 0.25s;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+      }
+      .tog.on::after {
+        transform: translateX(22px);
+      }
+
+      /* ═══ VOICE ═══ */
+      .voice-btn {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--leaf);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 14px;
+        box-shadow: 0 4px 20px rgba(26, 102, 71, 0.4);
+        transition: all 0.18s ease;
+      }
+      .voice-btn svg {
+        width: 34px;
+        height: 34px;
+        fill: #fff;
+      }
+      .voice-btn:active,
+      .voice-btn.listening {
+        background: var(--forest);
+        transform: scale(1.08);
+      }
+      .voice-btn.listening {
+        animation: voicePulse 1.2s infinite;
+      }
+      @keyframes voicePulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(26, 102, 71, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 20px rgba(26, 102, 107, 0);
+        }
+      }
+
+      /* ═══ PREMIUM WALL ═══ */
+      .premium-wall {
+        background: linear-gradient(135deg, #fef9ef, #fffde7);
+        border: 1.5px solid rgba(201, 146, 42, 0.35);
+        border-radius: var(--r-md);
+        padding: 24px;
+        text-align: center;
+        margin-bottom: 14px;
+      }
+      .premium-wall h2 {
+        font-size: var(--t-lg);
+        font-weight: 800;
+        color: var(--gold-dk);
+        margin-bottom: 8px;
+      }
+      .premium-wall p {
+        font-size: var(--t-sm);
+        color: var(--amber);
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+
+      /* ═══ NOTIFS ═══ */
+      .notif-item {
+        display: flex;
+        gap: 14px;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border);
+        align-items: flex-start;
+      }
+      .notif-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--sage);
+        margin-top: 6px;
+        flex-shrink: 0;
+      }
+      .notif-dot.read {
+        background: var(--border);
+      }
+      .notif-title {
+        font-size: var(--t-base);
+        font-weight: 700;
+      }
+      .notif-body {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-top: 4px;
+        line-height: 1.45;
+      }
+      .notif-time {
+        font-size: var(--t-xs);
+        color: #aab8b2;
+        margin-top: 4px;
+      }
+
+      /* ═══ NAV ═══ */
+      .nav {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 430px;
+        background: rgba(255, 255, 255, 0.96);
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid var(--border);
+        display: flex;
+        z-index: 200;
+        padding: 8px 0;
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
+      }
+      .nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        padding: 6px 4px;
+        color: var(--mist);
+        font-size: var(--t-xs);
+        font-weight: 600;
+        transition: color 0.18s;
+        min-height: 50px;
+        justify-content: center;
+      }
+      .nav-item.active {
+        color: var(--leaf);
+      }
+      .nav-item svg {
+        width: 24px;
+        height: 24px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+      }
+      .nav-item.active svg {
+        stroke-width: 2.2;
+      }
+
+      /* ═══ TOAST ═══ */
+      #toast {
+        position: fixed;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--forest);
+        color: #fff;
+        padding: 13px 22px;
+        border-radius: 30px;
+        font-size: var(--t-sm);
+        font-weight: 600;
+        z-index: 999;
+        display: none;
+        white-space: nowrap;
+        box-shadow: 0 6px 24px rgba(10, 61, 46, 0.3);
+        animation: toastIn 0.2s ease;
+      }
+      @keyframes toastIn {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(8px);
+        }
+      }
+
+      /* ═══ MODAL (voice, premium) ═══ */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 31, 24, 0.6);
+        z-index: 500;
+        align-items: flex-end;
+        justify-content: center;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+      }
+      .modal-overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--white);
+        border-radius: var(--r-xl) var(--r-xl) 0 0;
+        padding: 28px 24px 32px;
+        padding-bottom: max(32px, env(safe-area-inset-bottom));
+        width: 100%;
+        max-width: 430px;
+        max-height: 92vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        animation: slideUp 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      .modal-handle {
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--border);
+        margin: 0 auto 20px;
+      }
+      .modal h2 {
+        font-size: var(--t-lg);
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .modal p {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        margin-bottom: 16px;
+        line-height: 1.5;
+      }
+      .modal input {
+        width: 100%;
+        padding: 16px 18px;
+        font-size: var(--t-base);
+        font-family: var(--font-body);
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-sm);
+        margin-bottom: 12px;
+        background: var(--pale);
+        color: var(--ink);
+        -webkit-appearance: none;
+        min-height: 54px;
+      }
+      .modal input:focus {
+        outline: none;
+        border-color: var(--sage);
+        background: #fff;
+      }
+
+      /* ═══ AVATAR ═══ */
+      .avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+      }
+
+      /* ═══ DIVIDER ═══ */
+      .divider {
+        height: 1px;
+        background: var(--border);
+        margin: 6px 0 16px;
+      }
+      body.mode-senior .btn-sm .btn-label-main {
+        font-size: var(--t-md);
+        font-weight: 700;
+      }
+      body.mode-senior .btn {
+        min-height: 64px;
+      }
+
+      /* ═══ LOADING SPINNER ═══ */
+      .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ═══ PAYMENT SUCCESS ═══ */
+      .pay-success {
+        text-align: center;
+        padding: 24px 0;
+      }
+      .pay-success-icon {
+        width: 72px;
+        height: 72px;
+        background: var(--mint);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+      }
+      .pay-success-icon svg {
+        width: 36px;
+        height: 36px;
+        stroke: var(--forest);
+        stroke-width: 2.5;
+        fill: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════════════════
+     PANTALLA DE INICIO (Splash Auth)
+══════════════════════════════════════════════════ -->
+    <div id="auth-splash">
+      <div class="splash-top">
+        <div class="splash-logo">
+          <svg viewBox="0 0 48 48">
+            <path
+              d="M8 36c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4V20L28 8H12c-2.2 0-4 1.8-4 4v24z"
+              opacity=".45"
+            />
+            <path d="M28 8l12 12H32c-2.2 0-4-1.8-4-4V8z" />
+            <path
+              d="M16 22h16M16 28h12M16 34h8"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              fill="none"
+            />
+          </svg>
+        </div>
+        <div class="splash-title">AseoYa</div>
+        <p class="splash-sub">
+          Tu servicio de recolección de basuras, siempre en tu mano
+        </p>
+      </div>
+
+      <div class="splash-actions">
+        <p>Bogotá, Colombia</p>
+        <button class="auth-btn-primary" onclick="openAuthModal('login')">
+          Iniciar sesión
+        </button>
+        <button class="auth-btn-outline" onclick="openAuthModal('register')">
+          Registrarse
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+     AUTH MODAL (login / register / plan / pago)
+══════════════════════════════════════════════════ -->
+    <div id="auth-modal">
+      <div class="auth-sheet" id="auth-sheet">
+        <!-- STEP: LOGIN -->
+        <div class="auth-step active" id="step-login">
+          <div class="auth-handle"></div>
+          <div class="auth-logo-sm">
+            <svg viewBox="0 0 48 48">
+              <path
+                d="M8 36c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4V20L28 8H12c-2.2 0-4 1.8-4 4v24z"
+                opacity=".5"
+              />
+              <path d="M28 8l12 12H32c-2.2 0-4-1.8-4-4V8z" />
+            </svg>
+          </div>
+          <h2>Bienvenido de nuevo</h2>
+          <p class="auth-desc">Inicia sesión en tu cuenta AseoYa</p>
+          <div class="auth-error" id="login-error">
+            Correo o contraseña incorrectos. Intenta de nuevo.
+          </div>
+          <div class="auth-field">
+            <label>Correo electrónico</label>
+            <input
+              type="email"
+              id="login-email"
+              placeholder="tucorreo@email.com"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="login-pass"
+              placeholder="Tu contraseña"
+              autocomplete="current-password"
+            />
+          </div>
+          <button
+            class="auth-sheet-btn asb-green"
+            onclick="doLogin()"
+            id="login-btn"
+          >
+            Iniciar sesión
+          </button>
+          <div class="auth-link">
+            ¿No tienes cuenta?
+            <span onclick="switchStep('register')">Regístrate aquí</span>
+          </div>
+        </div>
+
+        <!-- STEP: REGISTER -->
+        <div class="auth-step" id="step-register">
+          <div class="auth-handle"></div>
+          <h2>Crear cuenta</h2>
+          <p class="auth-desc">
+            Registra tus datos para empezar a usar AseoYa gratis
+          </p>
+          <div class="auth-error" id="reg-error">
+            Por favor completa todos los campos.
+          </div>
+          <div class="auth-field">
+            <label>Nombre completo</label>
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Ej: Carlos Rodríguez"
+              autocomplete="name"
+            />
+          </div>
+          <div class="auth-field">
+            <label>Correo electrónico</label>
+            <input
+              type="email"
+              id="reg-email"
+              placeholder="tucorreo@email.com"
+              autocomplete="email"
+              inputmode="email"
+            />
+          </div>
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="reg-pass"
+              placeholder="Mínimo 6 caracteres"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="auth-field">
+            <label>Tu barrio en Bogotá</label>
+            <input
+              type="text"
+              id="reg-zone"
+              placeholder="Ej: Barrio San Luis"
+              autocomplete="address-level3"
+            />
+          </div>
+          <button
+            class="auth-sheet-btn asb-green"
+            onclick="doRegister()"
+            id="reg-btn"
+          >
+            Crear cuenta gratis
+          </button>
+          <div class="auth-link">
+            ¿Ya tienes cuenta?
+            <span onclick="switchStep('login')">Inicia sesión</span>
+          </div>
+        </div>
+
+        <!-- STEP: ELEGIR PLAN -->
+        <div class="auth-step" id="step-plan">
+          <div class="auth-handle"></div>
+          <h2>Elige tu plan</h2>
+          <p class="auth-desc">
+            Empieza gratis o activa Premium para disfrutar todos los beneficios
+          </p>
+
+          <div
+            class="plan-card selected"
+            id="plan-free"
+            onclick="selectPlan('free')"
+          >
+            <div class="plan-card-header">
+              <div>
+                <div class="plan-name">Versión Gratis</div>
+                <div class="plan-price">$0 <span>/ mes</span></div>
+              </div>
+              <div class="plan-check">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+            </div>
+            <div class="plan-desc">
+              Horarios de recolección, mapa en tiempo real, reportes básicos y
+              alertas estándar.
+            </div>
+          </div>
+
+          <div
+            class="plan-card plan-card-premium"
+            id="plan-premium"
+            onclick="selectPlan('premium')"
+          >
+            <span class="plan-badge">⭐ Más popular</span>
+            <div class="plan-card-header">
+              <div>
+                <div class="plan-name" style="color: var(--gold-dk)">
+                  Versión Premium
+                </div>
+                <div class="plan-price" style="color: var(--gold)">
+                  $5.000 <span>/ mes</span>
+                </div>
+              </div>
+              <div class="plan-check">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+            </div>
+            <div class="plan-desc" style="color: var(--amber)">
+              Noticias exclusivas · Alertas anticipadas 30 min antes · Reportes
+              prioritarios · Sin publicidad · Descuentos aliados.
+            </div>
+          </div>
+
+          <div
+            class="plan-card plan-card-premium"
+            id="plan-annual"
+            onclick="selectPlan('annual')"
+          >
+            <div class="plan-card-header">
+              <div>
+                <div class="plan-name" style="color: var(--gold-dk)">
+                  Premium Anual
+                </div>
+                <div class="plan-price" style="color: var(--gold)">
+                  $50.000 <span>/ año</span>
+                </div>
+              </div>
+              <div class="plan-check">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+            </div>
+            <div class="plan-desc" style="color: var(--amber)">
+              Todo lo de Premium mensual + 2 meses gratis. Ahorras $10.000.
+            </div>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-green"
+            onclick="continuePlan()"
+            id="plan-btn"
+          >
+            Continuar
+          </button>
+        </div>
+
+        <!-- STEP: PAGO -->
+        <div class="auth-step" id="step-payment">
+          <div class="auth-handle"></div>
+          <h2>Método de pago</h2>
+          <p class="auth-desc" id="pay-desc">
+            Elige cómo quieres pagar tu suscripción Premium
+          </p>
+
+          <div
+            class="pay-method selected"
+            id="pm-nequi"
+            onclick="selectPayMethod('nequi')"
+          >
+            <div class="pay-icon pay-icon-nequi">N</div>
+            <div class="pay-info">
+              <div class="pay-name">Nequi</div>
+              <div class="pay-sub">Paga con tu cuenta Nequi</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
+          <div
+            class="pay-method"
+            id="pm-davi"
+            onclick="selectPayMethod('davi')"
+          >
+            <div class="pay-icon pay-icon-davi">D+</div>
+            <div class="pay-info">
+              <div class="pay-name">Daviplata</div>
+              <div class="pay-sub">Paga con tu billetera Daviplata</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
+          <div class="pay-method" id="pm-pse" onclick="selectPayMethod('pse')">
+            <div class="pay-icon pay-icon-pse">PSE</div>
+            <div class="pay-info">
+              <div class="pay-name">PSE</div>
+              <div class="pay-sub">Débito desde tu cuenta bancaria</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
+          <div
+            class="pay-method"
+            id="pm-card"
+            onclick="selectPayMethod('card')"
+          >
+            <div class="pay-icon pay-icon-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                width="22"
+                height="22"
+              >
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            </div>
+            <div class="pay-info">
+              <div class="pay-name">Tarjeta Débito / Crédito</div>
+              <div class="pay-sub">Visa, Mastercard, Amex</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
+          <div
+            class="pay-method"
+            id="pm-transfer"
+            onclick="selectPayMethod('transfer')"
+          >
+            <div class="pay-icon pay-icon-transfer">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                width="22"
+                height="22"
+              >
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              </svg>
+            </div>
+            <div class="pay-info">
+              <div class="pay-name">Transferencia Bancaria</div>
+              <div class="pay-sub">Bancolombia, Davivienda, Nequi...</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-gold"
+            onclick="doPay()"
+            id="pay-btn"
+            style="margin-top: 6px"
+          >
+            Pagar y activar Premium
+          </button>
+          <button class="auth-sheet-btn asb-ghost" onclick="skipPayment()">
+            Continuar sin Premium
+          </button>
+        </div>
+
+        <!-- STEP: PAGO EXITOSO -->
+        <div class="auth-step" id="step-success">
+          <div class="auth-handle"></div>
+          <div class="pay-success">
+            <div class="pay-success-icon">
+              <svg viewBox="0 0 24 24">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </div>
+            <h2 style="margin-bottom: 10px">¡Pago exitoso!</h2>
+            <p
+              style="color: var(--sage); font-weight: 600; margin-bottom: 6px"
+              id="success-plan-label"
+            >
+              Premium Mensual activado
+            </p>
+            <p style="text-align: center; color: var(--mist)">
+              Ya tienes acceso a todas las funciones exclusivas de AseoYa
+              Premium. Bienvenido.
+            </p>
+          </div>
+          <button class="auth-sheet-btn asb-green" onclick="finishAuth()">
+            Empezar a usar AseoYa
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════
+     APP: STATUS BAR
+══════════════════════════════════════════════════ -->
+    <div class="status-bar" id="status-bar" style="display: none">
+      <span id="clock">9:41 AM</span>
+      <span style="font-size: var(--t-xs); opacity: 0.75" id="zone-lbl"
+        >Barrio San Luis</span
+      >
+      <div class="sb-right">
+        <svg width="16" height="10" viewBox="0 0 16 10" fill="none">
+          <rect
+            x="0"
+            y="5"
+            width="2"
+            height="5"
+            fill="rgba(255,255,255,.5)"
+            rx="1"
+          />
+          <rect
+            x="3.5"
+            y="3"
+            width="2"
+            height="7"
+            fill="rgba(255,255,255,.65)"
+            rx="1"
+          />
+          <rect
+            x="7"
+            y="1"
+            width="2"
+            height="9"
+            fill="rgba(255,255,255,.8)"
+            rx="1"
+          />
+          <rect x="10.5" y="0" width="2" height="10" fill="#fff" rx="1" />
+        </svg>
+        <div class="sb-battery"><div class="sb-battery-fill"></div></div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ INICIO ════════════════════ -->
+    <div class="screen" id="scr-home">
+      <div class="hdr">
+        <div class="hdr-greeting">
+          Buenos días, <span id="user-name-lbl">Carlos</span>
+        </div>
+        <h1 class="hdr-title">Tu servicio<br />de aseo</h1>
+        <p class="hdr-sub" id="hdr-zone">Barrio San Luis · Chapinero</p>
+        <div id="premium-badge" class="badge-premium" style="display: none">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M8 1l1.75 3.5L14 5.25l-3 2.9.7 4.1L8 10.25 4.3 12.25l.7-4.1-3-2.9 4.25-.75z"
+            />
+          </svg>
+          Premium
+        </div>
+      </div>
+      <div class="content">
+        <div class="card" id="eta-card">
+          <div class="eta-row">
+            <div>
+              <div class="eta-num" id="eta-display">8</div>
+              <div class="eta-unit">minutos</div>
+            </div>
+            <div class="eta-meta">
+              <div style="margin-bottom: 6px">
+                <span class="pill pill-green"
+                  ><span class="pill-dot"></span> En ruta</span
+                >
+              </div>
+              <div class="eta-route">Ruta 4 · CBD 782<br />7:00 – 9:00 AM</div>
+            </div>
+          </div>
+          <div class="map-box">
+            <div class="map-grid"></div>
+            <div class="map-road-h"></div>
+            <div class="map-road-v"></div>
+            <div class="map-road-v2"></div>
+            <div class="map-truck">
+              <svg
+                viewBox="0 0 32 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="2"
+                  y="6"
+                  width="20"
+                  height="14"
+                  rx="2"
+                  fill="#1a6647"
+                />
+                <rect
+                  x="22"
+                  y="10"
+                  width="8"
+                  height="10"
+                  rx="1.5"
+                  fill="#2d9e6b"
+                />
+                <circle
+                  cx="8"
+                  cy="21"
+                  r="3"
+                  fill="#0a3d2e"
+                  stroke="#c8f0dc"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="24"
+                  cy="21"
+                  r="3"
+                  fill="#0a3d2e"
+                  stroke="#c8f0dc"
+                  stroke-width="1.5"
+                />
+                <rect
+                  x="4"
+                  y="8"
+                  width="8"
+                  height="6"
+                  rx="1"
+                  fill="#c8f0dc"
+                  opacity=".4"
+                />
+              </svg>
+            </div>
+            <div class="map-you"></div>
+            <div class="map-label">Tu ubicación</div>
+          </div>
+          <button
+            class="btn btn-outline"
+            onclick="
+              speak(
+                'El camión está a 8 minutos de tu sector. Saca la basura ahora.',
+              )
+            "
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path
+                d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"
+              />
+            </svg>
+            Escuchar en voz alta
+          </button>
+        </div>
+
+        <div class="alert alert-green">
+          <div class="alert-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div class="alert-body">
+            <h3>El camión está cerca</h3>
+            <p>Está a 3 cuadras. Saca tu basura <strong>ahora</strong>.</p>
+          </div>
+        </div>
+        <div class="alert alert-amber">
+          <div class="alert-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+              />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div class="alert-body">
+            <h3>Posible retraso hoy</h3>
+            <p>Lluvia puede causar 10–15 min de demora.</p>
+          </div>
+        </div>
+
+        <div class="sec-title">Accesibilidad</div>
+        <button class="btn btn-outline" onclick="openVoice()">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+            <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+          </svg>
+          Hablar con AseoYa
+        </button>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+          <button class="btn-sm btn-sm-gray" onclick="increaseFontSize()">
+            <div class="btn-icon btn-icon-gray">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <text x="1" y="17" font-size="11">A</text>
+                <text x="11" y="20" font-size="14">A</text>
+              </svg>
+            </div>
+            <div><div class="btn-label-main">Letra grande</div></div>
+          </button>
+          <button class="btn-sm btn-sm-gray" onclick="resetFontSize()">
+            <div class="btn-icon btn-icon-gray">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <text x="3" y="16" font-size="10">Aa</text>
+              </svg>
+            </div>
+            <div><div class="btn-label-main">Normal</div></div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ HORARIOS ════════════════════ -->
+    <div class="screen" id="scr-schedule">
+      <div class="hdr hdr-plain">
+        <h1>Horarios</h1>
+        <p>Tu semana de recolección</p>
+      </div>
+      <div class="content">
+        <div class="sec-title">Esta semana</div>
+        <div class="sched-row today">
+          <div>
+            <div class="sched-day">Martes 13 — HOY</div>
+            <div class="sched-time">7:00 – 9:00 AM · Residuos ordinarios</div>
+          </div>
+          <span class="pill pill-green"
+            ><span class="pill-dot"></span> En ruta</span
+          >
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-day">Jueves 15 mayo</div>
+            <div class="sched-time">6:30 – 8:30 AM · Reciclaje</div>
+          </div>
+          <span class="pill pill-gray">Próximo</span>
+        </div>
+        <div class="sched-row">
+          <div>
+            <div class="sched-day">Sábado 17 mayo</div>
+            <div class="sched-time">8:00 – 10:30 AM · Ordinarios</div>
+          </div>
+          <span class="pill pill-gray">Próximo</span>
+        </div>
+
+        <div class="sec-title">Próxima recolección — Jueves</div>
+        <div class="card">
+          <h3 style="margin-bottom: 14px">Día de reciclaje</h3>
+          <div class="countdown">
+            <div class="cd-box">
+              <div class="cd-num" id="cd-h">01</div>
+              <div class="cd-lbl">horas</div>
+            </div>
+            <div class="cd-box">
+              <div class="cd-num" id="cd-m">24</div>
+              <div class="cd-lbl">min</div>
+            </div>
+            <div class="cd-box">
+              <div class="cd-num" id="cd-s">00</div>
+              <div class="cd-lbl">seg</div>
+            </div>
+          </div>
+          <div class="alert alert-green" style="margin: 0">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4l3 3" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <p>
+                Separa cartón, plástico y vidrio en bolsas
+                <strong>azules o blancas</strong> esta noche.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-title">Noticias del servicio</div>
+        <div id="news-free">
+          <div class="alert alert-amber">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Nueva ruta en Chapinero</h3>
+              <p>Ampliaron la cobertura al sector norte desde el 20 de mayo.</p>
+            </div>
+          </div>
+        </div>
+        <div id="news-premium" style="display: none">
+          <div class="alert alert-green" style="margin-bottom: 8px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="2" y="3" width="20" height="14" rx="2" />
+                <line x1="8" y1="21" x2="16" y2="21" />
+                <line x1="12" y1="17" x2="12" y2="21" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Nueva ruta en Chapinero</h3>
+              <p>Ampliaron la cobertura al sector norte desde el 20 de mayo.</p>
+            </div>
+          </div>
+          <div class="alert alert-gold">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Recolección especial de muebles</h3>
+              <p>Días 20 y 27 de mayo — solo notificado a usuarios Premium.</p>
+            </div>
+          </div>
+        </div>
+        <div id="news-wall" class="premium-wall">
+          <h2>Contenido Premium</h2>
+          <p>
+            Accede a noticias exclusivas, alertas anticipadas y beneficios
+            especiales.
+          </p>
+          <button class="btn btn-gold" onclick="openPremiumModal()">
+            Ver planes Premium
+          </button>
+        </div>
+        <button
+          class="btn btn-outline"
+          onclick="
+            speak(
+              'Esta semana el camión pasa el martes, jueves y sábado. Hoy es martes. Recuerda sacar la basura antes de las 7 de la mañana.',
+            )
+          "
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+          </svg>
+          Escuchar horarios
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════ REPORTAR ════════════════════ -->
+    <div class="screen" id="scr-report">
+      <div class="hdr hdr-plain">
+        <h1>Reportar</h1>
+        <p>Ayuda a mejorar tu barrio</p>
+      </div>
+      <div class="content">
+        <div class="sec-title">¿Qué pasó?</div>
+        <button
+          class="btn-sm btn-sm-red"
+          onclick="sendReport('No pasó el camión hoy')"
+        >
+          <div class="btn-icon btn-icon-red">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+            </svg>
+          </div>
+          <div>
+            <div class="btn-label-main">No pasó el camión</div>
+            <div
+              style="
+                font-size: var(--t-xs);
+                color: var(--mist);
+                margin-top: 2px;
+              "
+            >
+              El camión no recogió hoy
+            </div>
+          </div>
+        </button>
+        <button
+          class="btn-sm btn-sm-amber"
+          onclick="sendReport('Basura acumulada en la calle')"
+        >
+          <div class="btn-icon btn-icon-amber">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="3 6 5 6 21 6" />
+              <path
+                d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"
+              />
+            </svg>
+          </div>
+          <div>
+            <div class="btn-label-main">Basura acumulada</div>
+            <div
+              style="
+                font-size: var(--t-xs);
+                color: var(--mist);
+                margin-top: 2px;
+              "
+            >
+              Bolsas sin recoger
+            </div>
+          </div>
+        </button>
+        <button
+          class="btn-sm btn-sm-amber"
+          onclick="sendReport('Bolsas dañadas por animales')"
+        >
+          <div class="btn-icon btn-icon-amber">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+              />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <div>
+            <div class="btn-label-main">Daño por animales</div>
+            <div
+              style="
+                font-size: var(--t-xs);
+                color: var(--mist);
+                margin-top: 2px;
+              "
+            >
+              Animales dañaron las bolsas
+            </div>
+          </div>
+        </button>
+        <button
+          class="btn-sm btn-sm-gray"
+          onclick="sendReport('Horario incorrecto')"
+        >
+          <div class="btn-icon btn-icon-gray">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div>
+            <div class="btn-label-main">Horario equivocado</div>
+            <div
+              style="
+                font-size: var(--t-xs);
+                color: var(--mist);
+                margin-top: 2px;
+              "
+            >
+              La hora no coincide con la realidad
+            </div>
+          </div>
+        </button>
+        <button class="btn-sm btn-sm-gray" onclick="openVoiceReport()">
+          <div class="btn-icon btn-icon-gray">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+              <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+            </svg>
+          </div>
+          <div>
+            <div class="btn-label-main">Reportar por voz</div>
+            <div
+              style="
+                font-size: var(--t-xs);
+                color: var(--mist);
+                margin-top: 2px;
+              "
+            >
+              Habla y nosotros lo escribimos
+            </div>
+          </div>
+        </button>
+
+        <div class="sec-title">Reportes recientes de tu zona</div>
+        <div class="alert alert-amber">
+          <div class="alert-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div class="alert-body">
+            <h3>Retraso confirmado</h3>
+            <p>Cra 5 con Cll 67 · hace 23 min · En revisión</p>
+          </div>
+        </div>
+        <div class="alert alert-green">
+          <div class="alert-icon">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <div class="alert-body">
+            <h3>Problema resuelto</h3>
+            <p>Calle 68 · Ayer · Recolectado correctamente</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ ALERTAS ════════════════════ -->
+    <div class="screen" id="scr-notif">
+      <div class="hdr hdr-plain">
+        <h1>Alertas</h1>
+        <p id="notif-count">3 nuevas hoy</p>
+      </div>
+      <div class="content">
+        <div class="sec-title">Hoy · martes 13 mayo</div>
+        <div class="notif-item">
+          <div class="notif-dot"></div>
+          <div>
+            <div class="notif-title">Camión a 8 minutos</div>
+            <div class="notif-body">
+              Ruta 4 está llegando a tu sector. Saca la basura ahora.
+            </div>
+            <div class="notif-time">7:34 AM</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-dot"></div>
+          <div>
+            <div class="notif-title">Posible retraso por lluvia</div>
+            <div class="notif-body">
+              La ruta puede demorarse 10–15 minutos por las condiciones
+              climáticas.
+            </div>
+            <div class="notif-time">7:10 AM</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-dot"></div>
+          <div>
+            <div class="notif-title">Recordatorio de mañana</div>
+            <div class="notif-body">
+              Mañana pasa el camión entre 7–9 AM. Saca tu basura antes de las
+              6:45.
+            </div>
+            <div class="notif-time">Ayer · 8:00 PM</div>
+          </div>
+        </div>
+        <div id="premium-notifs" style="display: none">
+          <div class="alert alert-gold" style="margin-top: 10px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Alerta Premium anticipada</h3>
+              <p>
+                Mañana habrá recolección especial de escombros en tu cuadra.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="notif-wall" class="premium-wall">
+          <h2>Alertas Premium</h2>
+          <p>
+            Recibe notificaciones anticipadas, alertas de cambios de ruta y
+            avisos exclusivos.
+          </p>
+          <button class="btn btn-gold" onclick="openPremiumModal()">
+            Activar Premium
+          </button>
+        </div>
+        <div class="sec-title">Ayer · lunes 12 mayo</div>
+        <div class="notif-item">
+          <div class="notif-dot read"></div>
+          <div>
+            <div class="notif-title" style="font-weight: 500">
+              Recolección completada
+            </div>
+            <div class="notif-body">
+              El camión completó la ruta de tu barrio. Cobertura 98%.
+            </div>
+            <div class="notif-time">8:52 AM</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-dot read"></div>
+          <div>
+            <div class="notif-title" style="font-weight: 500">
+              Cambio de horario
+            </div>
+            <div class="notif-body">
+              El jueves el camión llegará a las 6:30 AM, media hora antes.
+            </div>
+            <div class="notif-time">Ayer · 6:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ PERFIL ════════════════════ -->
+    <div class="screen" id="scr-profile">
+      <div class="hdr">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <div class="avatar" id="avatar">CR</div>
+          <div>
+            <div
+              style="font-size: var(--t-md); font-weight: 700; color: #fff"
+              id="profile-name"
+            >
+              Carlos Rodríguez
+            </div>
+            <div
+              style="font-size: var(--t-sm); color: rgba(255, 255, 255, 0.65)"
+              id="profile-zone"
+            >
+              Barrio San Luis · Chapinero
+            </div>
+            <div id="profile-badge" style="display: none; margin-top: 8px">
+              <span class="pill pill-gold">Premium</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-num">12</div>
+            <div class="stat-lbl">Reportes enviados</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">94%</div>
+            <div class="stat-lbl">Cobertura de mi zona</div>
+          </div>
+        </div>
+
+        <div id="premium-cta" class="card card-premium">
+          <h3 style="color: var(--gold-dk); font-size: var(--t-lg)">
+            Hazte Premium
+          </h3>
+          <p style="color: var(--amber); margin: 8px 0 14px; line-height: 1.5">
+            Noticias exclusivas, alertas anticipadas, reportes prioritarios y
+            descuentos.
+          </p>
+          <div
+            style="
+              font-size: var(--t-sm);
+              color: var(--slate);
+              margin-bottom: 16px;
+              line-height: 1.8;
+            "
+          >
+            ✓ Noticias exclusivas del barrio<br />
+            ✓ Alertas 30 min antes que los demás<br />
+            ✓ Reportes atendidos en 1 hora<br />
+            ✓ Descuentos en tiendas aliadas
+          </div>
+          <button class="btn btn-gold" onclick="openPremiumModal()">
+            Ver planes — desde $5.000/mes
+          </button>
+        </div>
+        <div
+          id="premium-active"
+          class="card card-premium"
+          style="display: none"
+        >
+          <h3 style="color: var(--gold-dk); font-size: var(--t-lg)">
+            Cuenta Premium activa ⭐
+          </h3>
+          <p style="color: var(--amber); margin: 8px 0 14px">
+            Estás disfrutando todos los beneficios exclusivos.
+          </p>
+          <button class="btn-sm btn-sm-gray" onclick="cancelPremium()">
+            <div class="btn-icon btn-icon-gray">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="15" y1="9" x2="9" y2="15" />
+                <line x1="9" y1="9" x2="15" y2="15" />
+              </svg>
+            </div>
+            <div class="btn-label-main">Cancelar suscripción</div>
+          </button>
+        </div>
+
+        <div class="sec-title">Notificaciones</div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h3>Camión en camino</h3>
+            <p>Avisar cuando esté a 10 minutos</p>
+          </div>
+          <div class="tog on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h3>Recordatorio nocturno</h3>
+            <p>La noche antes de la recolección</p>
+          </div>
+          <div class="tog on" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h3>Alertas de retraso</h3>
+            <p>Cambios de ruta o novedades</p>
+          </div>
+          <div class="tog" onclick="this.classList.toggle('on')"></div>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <h3>Leer alertas en voz alta</h3>
+            <p>Asistencia de voz automática</p>
+          </div>
+          <div
+            class="tog on"
+            id="voice-toggle"
+            onclick="toggleVoiceAuto()"
+          ></div>
+        </div>
+
+        <div class="sec-title">Tamaño de letra</div>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 14px;
+          "
+        >
+          <button
+            class="btn-sm btn-sm-gray"
+            style="justify-content: center; font-size: var(--t-sm)"
+            onclick="resetFontSize()"
+          >
+            Normal
+          </button>
+          <button
+            class="btn-sm btn-sm-green"
+            style="justify-content: center; font-size: var(--t-base)"
+            onclick="increaseFontSize()"
+          >
+            Grande
+          </button>
+          <button
+            class="btn-sm btn-sm-green"
+            style="justify-content: center; font-size: var(--t-md)"
+            onclick="maxFontSize()"
+          >
+            Muy grande
+          </button>
+        </div>
+
+        <div class="sec-title">Mi zona</div>
+        <div class="sched-row" onclick="editZone()" style="cursor: pointer">
+          <div>
+            <div class="sched-day" id="zone-display">Barrio San Luis</div>
+            <div class="sched-time">Ruta 4 · Zona Chapinero Norte</div>
+          </div>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--mist)"
+            stroke-width="2"
+          >
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg>
+        </div>
+
+        <button
+          class="btn btn-ghost"
+          style="margin-top: 16px"
+          onclick="logOut()"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"
+            />
+          </svg>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════ NAV ════════════════════ -->
+    <nav class="nav" id="main-nav" style="display: none">
+      <div class="nav-item active" id="nav-home" onclick="goTo('home')">
+        <svg viewBox="0 0 24 24">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span>Inicio</span>
+      </div>
+      <div class="nav-item" id="nav-schedule" onclick="goTo('schedule')">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <span>Horarios</span>
+      </div>
+      <div class="nav-item" id="nav-report" onclick="goTo('report')">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
+          />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        <span>Reportar</span>
+      </div>
+      <div class="nav-item" id="nav-notif" onclick="goTo('notif')">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"
+          />
+        </svg>
+        <span>Alertas</span>
+      </div>
+      <div class="nav-item" id="nav-profile" onclick="goTo('profile')">
+        <svg viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span>Perfil</span>
+      </div>
+    </nav>
+
+    <!-- ════════════════════ TOAST ════════════════════ -->
+    <div id="toast"></div>
+
+    <!-- ════════════════════ PREMIUM MODAL ════════════════════ -->
+    <div class="modal-overlay" id="premium-modal">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <h2
+          style="
+            text-align: center;
+            color: var(--gold-dk);
+            font-family: var(--font-display);
+          "
+        >
+          Planes Premium
+        </h2>
+        <p style="text-align: center">Elige el plan que más te conviene</p>
+        <div class="card" style="margin-bottom: 12px">
+          <h3>Gratuito</h3>
+          <p style="font-size: var(--t-sm); color: var(--mist); margin: 8px 0">
+            Horarios, notificaciones básicas y reportes.
+          </p>
+          <div
+            style="font-size: var(--t-lg); font-weight: 800; color: var(--ink)"
+          >
+            $0 / mes
+          </div>
+          <button
+            class="btn-sm btn-sm-gray"
+            style="margin-top: 12px"
+            onclick="closePremiumModal()"
+          >
+            <div class="btn-label-main">Continuar gratis</div>
+          </button>
+        </div>
+        <div class="card card-premium" style="margin-bottom: 12px">
+          <span class="pill pill-gold" style="margin-bottom: 10px"
+            >Más popular</span
+          >
+          <h3 style="color: var(--gold-dk)">Premium Mensual</h3>
+          <p style="font-size: var(--t-sm); color: var(--amber); margin: 8px 0">
+            Noticias exclusivas, alertas anticipadas, sin publicidad.
+          </p>
+          <div
+            style="
+              font-size: var(--t-lg);
+              font-weight: 800;
+              color: var(--gold-dk);
+            "
+          >
+            $5.000 / mes
+          </div>
+          <button
+            class="btn btn-gold"
+            style="margin-top: 12px"
+            onclick="activatePremium()"
+          >
+            Activar Premium
+          </button>
+        </div>
+        <div class="card card-premium">
+          <h3 style="color: var(--gold-dk)">Premium Anual</h3>
+          <p style="font-size: var(--t-sm); color: var(--amber); margin: 8px 0">
+            Todo lo del mensual + 2 meses gratis.
+          </p>
+          <div
+            style="
+              font-size: var(--t-lg);
+              font-weight: 800;
+              color: var(--gold-dk);
+            "
+          >
+            $50.000 / año
+          </div>
+          <div
+            style="
+              font-size: var(--t-xs);
+              color: var(--sage);
+              font-weight: 700;
+              margin-bottom: 12px;
+            "
+          >
+            Ahorras $10.000
+          </div>
+          <button class="btn btn-gold" onclick="activatePremium()">
+            Activar Anual
+          </button>
+        </div>
+        <button
+          class="btn btn-ghost"
+          style="margin-top: 4px"
+          onclick="closePremiumModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════ VOICE MODAL ════════════════════ -->
+    <div class="modal-overlay" id="voice-modal">
+      <div class="modal" style="text-align: center">
+        <div class="modal-handle"></div>
+        <h2 style="margin-bottom: 6px">Asistente de voz</h2>
+        <p id="voice-instruction">Toca el micrófono y pregúntame algo</p>
+        <p
+          style="
+            font-size: var(--t-xs);
+            color: var(--mist);
+            margin-bottom: 22px;
+          "
+        >
+          "¿A qué hora pasa el camión?" · "Quiero reportar un problema"
+        </p>
+        <button
+          class="voice-btn"
+          id="voice-btn-big"
+          onclick="toggleListening()"
+        >
+          <svg viewBox="0 0 24 24">
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+            <path
+              d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"
+              fill="none"
+              stroke="#fff"
+              stroke-width="2.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+        <p
+          class="voice-status"
+          id="voice-status"
+          style="
+            text-align: center;
+            font-size: var(--t-sm);
+            color: var(--mist);
+            min-height: 22px;
+          "
+        >
+          Listo para escucharte
+        </p>
+        <div
+          id="voice-result"
+          style="
+            background: var(--pale);
+            border-radius: var(--r-sm);
+            padding: 14px;
+            margin: 14px 0;
+            display: none;
+            font-size: var(--t-sm);
+            color: var(--forest);
+            line-height: 1.55;
+            text-align: left;
+            border: 1px solid var(--border);
+          "
+        ></div>
+        <button
+          class="btn btn-ghost"
+          style="margin-top: 4px"
+          onclick="closeVoice()"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+    <script>
+      /* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+      var state = {
+        userName: "",
+        userZone: "Barrio San Luis",
+        isPremium: false,
+        voiceAutoRead: true,
+        etaVal: 8,
+        listening: false,
+        userMode: "normal",
+        isLoggedIn: false,
+        // Fake "accounts" storage (in-memory only)
+        accounts: [
+          {
+            email: "demo@aseoya.co",
+            pass: "123456",
+            name: "Carlos Rodríguez",
+            zone: "Barrio San Luis",
+            premium: false,
+          },
+        ],
+      };
+
+      var selectedPlan = "free";
+      var selectedPayMethod = "nequi";
+      var currentAuthStep = "login";
+
+      /* ═══════════════════════════════════════
+   AUTH FLOW
+═══════════════════════════════════════ */
+      function openAuthModal(mode) {
+        document.getElementById("auth-modal").classList.add("open");
+        switchStep(mode);
+      }
+
+      function switchStep(step) {
+        document.querySelectorAll(".auth-step").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        document.getElementById("step-" + step).classList.add("active");
+        currentAuthStep = step;
+        // Scroll sheet to top
+        var sheet = document.getElementById("auth-sheet");
+        if (sheet) sheet.scrollTop = 0;
+      }
+
+      function doLogin() {
+        var email = document.getElementById("login-email").value.trim();
+        var pass = document.getElementById("login-pass").value;
+        var errEl = document.getElementById("login-error");
+        errEl.style.display = "none";
+
+        if (!email || !pass) {
+          errEl.textContent = "Por favor completa correo y contraseña.";
+          errEl.style.display = "block";
+          return;
+        }
+
+        var btn = document.getElementById("login-btn");
+        btn.innerHTML = '<span class="spinner"></span>';
+        btn.disabled = true;
+
+        setTimeout(function () {
+          // Check accounts
+          var found = state.accounts.find(function (a) {
+            return a.email === email && a.pass === pass;
+          });
+          btn.innerHTML = "Iniciar sesión";
+          btn.disabled = false;
+
+          if (!found) {
+            errEl.textContent =
+              "Correo o contraseña incorrectos. Intenta de nuevo.";
+            errEl.style.display = "block";
+            return;
+          }
+          // Success
+          state.userName = found.name;
+          state.userZone = found.zone;
+          state.isPremium = found.premium;
+          state.isLoggedIn = true;
+          finishAuth();
+        }, 1200);
+      }
+
+      function doRegister() {
+        var name = document.getElementById("reg-name").value.trim();
+        var email = document.getElementById("reg-email").value.trim();
+        var pass = document.getElementById("reg-pass").value;
+        var zone = document.getElementById("reg-zone").value.trim();
+        var errEl = document.getElementById("reg-error");
+        errEl.style.display = "none";
+
+        if (!name || !email || !pass || !zone) {
+          errEl.textContent = "Por favor completa todos los campos.";
+          errEl.style.display = "block";
+          return;
+        }
+        if (pass.length < 6) {
+          errEl.textContent = "La contraseña debe tener al menos 6 caracteres.";
+          errEl.style.display = "block";
+          return;
+        }
+        if (!email.includes("@")) {
+          errEl.textContent = "Por favor ingresa un correo válido.";
+          errEl.style.display = "block";
+          return;
+        }
+
+        var btn = document.getElementById("reg-btn");
+        btn.innerHTML = '<span class="spinner"></span>';
+        btn.disabled = true;
+
+        setTimeout(function () {
+          btn.innerHTML = "Crear cuenta gratis";
+          btn.disabled = false;
+          state.userName = name;
+          state.userZone = zone;
+          state.isLoggedIn = true;
+          // Save account
+          state.accounts.push({
+            email: email,
+            pass: pass,
+            name: name,
+            zone: zone,
+            premium: false,
+          });
+          // Go to plan selection
+          switchStep("plan");
+        }, 1200);
+      }
+
+      function selectPlan(plan) {
+        selectedPlan = plan;
+        document.querySelectorAll(".plan-card").forEach(function (c) {
+          c.classList.remove("selected");
+        });
+        document.getElementById("plan-" + plan).classList.add("selected");
+      }
+
+      function continuePlan() {
+        if (selectedPlan === "free") {
+          state.isPremium = false;
+          finishAuth();
+        } else {
+          // Show payment step
+          var desc =
+            selectedPlan === "annual"
+              ? "Plan Premium Anual · $50.000 / año"
+              : "Plan Premium Mensual · $5.000 / mes";
+          document.getElementById("pay-desc").textContent = desc;
+          switchStep("payment");
+        }
+      }
+
+      function selectPayMethod(method) {
+        selectedPayMethod = method;
+        document.querySelectorAll(".pay-method").forEach(function (m) {
+          m.classList.remove("selected");
+        });
+        document.getElementById("pm-" + method).classList.add("selected");
+      }
+
+      function doPay() {
+        var btn = document.getElementById("pay-btn");
+        btn.innerHTML =
+          '<span class="spinner"></span>&nbsp; Procesando pago...';
+        btn.disabled = true;
+
+        setTimeout(function () {
+          btn.innerHTML = "Pagar y activar Premium";
+          btn.disabled = false;
+          state.isPremium = true;
+
+          var planLabel =
+            selectedPlan === "annual"
+              ? "Premium Anual activado ✓"
+              : "Premium Mensual activado ✓";
+          document.getElementById("success-plan-label").textContent = planLabel;
+          switchStep("success");
+        }, 2000);
+      }
+
+      function skipPayment() {
+        state.isPremium = false;
+        finishAuth();
+      }
+
+      function finishAuth() {
+        // Hide auth
+        document.getElementById("auth-modal").classList.remove("open");
+        document.getElementById("auth-splash").style.display = "none";
+        // Show app
+        document.getElementById("status-bar").style.display = "flex";
+        document.getElementById("main-nav").style.display = "flex";
+        updateUI();
+        goTo("home");
+        toast("¡Bienvenido, " + state.userName.split(" ")[0] + "!");
+        if (state.voiceAutoRead)
+          speak(
+            "Bienvenido a AseoYa, " +
+              state.userName.split(" ")[0] +
+              ". Tu barrio está registrado como " +
+              state.userZone +
+              ".",
+          );
+      }
+
+      function logOut() {
+        state.isLoggedIn = false;
+        state.isPremium = false;
+        state.userName = "";
+        // Hide app
+        document.getElementById("status-bar").style.display = "none";
+        document.getElementById("main-nav").style.display = "none";
+        document.querySelectorAll(".screen").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        // Reset auth
+        document.getElementById("login-email").value = "";
+        document.getElementById("login-pass").value = "";
+        document.getElementById("login-error").style.display = "none";
+        // Show splash
+        document.getElementById("auth-splash").style.display = "flex";
+        toast("Sesión cerrada");
+      }
+
+      /* ═══════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════ */
+      function goTo(id) {
+        document.querySelectorAll(".screen").forEach(function (s) {
+          s.style.display = "none";
+          s.classList.remove("active");
+        });
+        document.querySelectorAll(".nav-item").forEach(function (n) {
+          n.classList.remove("active");
+        });
+        var scr = document.getElementById("scr-" + id);
+        if (!scr) return;
+        scr.style.display = "block";
+        scr.classList.add("active");
+        var navItem = document.getElementById("nav-" + id);
+        if (navItem) navItem.classList.add("active");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      /* ═══════════════════════════════════════
+   UPDATE UI
+═══════════════════════════════════════ */
+      function updateUI() {
+        var firstName = state.userName.split(" ")[0];
+        var initials = state.userName
+          .split(" ")
+          .map(function (w) {
+            return w[0] || "";
+          })
+          .join("")
+          .slice(0, 2)
+          .toUpperCase();
+        document.getElementById("user-name-lbl").textContent = firstName;
+        document.getElementById("hdr-zone").textContent =
+          state.userZone + " · Chapinero";
+        document.getElementById("profile-name").textContent = state.userName;
+        document.getElementById("profile-zone").textContent =
+          state.userZone + " · Chapinero";
+        document.getElementById("avatar").textContent = initials;
+        document.getElementById("zone-lbl").textContent = state.userZone;
+        document.getElementById("zone-display").textContent = state.userZone;
+        document.getElementById("premium-badge").style.display = state.isPremium
+          ? "inline-flex"
+          : "none";
+        document.getElementById("profile-badge").style.display = state.isPremium
+          ? "block"
+          : "none";
+        document.getElementById("premium-cta").style.display = state.isPremium
+          ? "none"
+          : "block";
+        document.getElementById("premium-active").style.display =
+          state.isPremium ? "block" : "none";
+        document.getElementById("news-premium").style.display = state.isPremium
+          ? "block"
+          : "none";
+        document.getElementById("news-free").style.display = state.isPremium
+          ? "none"
+          : "block";
+        document.getElementById("news-wall").style.display = state.isPremium
+          ? "none"
+          : "block";
+        document.getElementById("premium-notifs").style.display =
+          state.isPremium ? "block" : "none";
+        document.getElementById("notif-wall").style.display = state.isPremium
+          ? "none"
+          : "block";
+      }
+
+      /* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+      var toastT;
+      function toast(msg, dur) {
+        var t = document.getElementById("toast");
+        t.textContent = msg;
+        t.style.display = "block";
+        t.style.animation = "none";
+        t.offsetHeight;
+        t.style.animation = "";
+        clearTimeout(toastT);
+        toastT = setTimeout(function () {
+          t.style.display = "none";
+        }, dur || 3000);
+      }
+
+      /* ═══════════════════════════════════════
+   CLOCK
+═══════════════════════════════════════ */
+      function updateClock() {
+        var now = new Date(),
+          h = now.getHours(),
+          m = now.getMinutes();
+        var ampm = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        document.getElementById("clock").textContent =
+          h + ":" + (m < 10 ? "0" : "") + m + " " + ampm;
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      /* ═══════════════════════════════════════
+   ETA
+═══════════════════════════════════════ */
+      setInterval(function () {
+        state.etaVal = Math.max(1, state.etaVal - 1);
+        var el = document.getElementById("eta-display");
+        if (el) el.textContent = state.etaVal;
+        if (state.etaVal === 5) {
+          toast("El camión está a 5 minutos. ¡Saca la basura!");
+          if (state.voiceAutoRead && state.isLoggedIn)
+            speak(
+              "Atención. El camión está a 5 minutos de tu sector. Saca la basura ahora.",
+            );
+        }
+      }, 12000);
+
+      /* ═══════════════════════════════════════
+   COUNTDOWN
+═══════════════════════════════════════ */
+      var cdTotal = 5040;
+      setInterval(function () {
+        cdTotal++;
+        var h = Math.floor(cdTotal / 3600),
+          m = Math.floor((cdTotal % 3600) / 60),
+          s = cdTotal % 60;
+        var eh = document.getElementById("cd-h"),
+          em = document.getElementById("cd-m"),
+          es = document.getElementById("cd-s");
+        if (eh) eh.textContent = ("0" + h).slice(-2);
+        if (em) em.textContent = ("0" + m).slice(-2);
+        if (es) es.textContent = ("0" + s).slice(-2);
+      }, 1000);
+
+      /* ═══════════════════════════════════════
+   TTS
+═══════════════════════════════════════ */
+      function speak(text) {
+        if (!window.speechSynthesis) {
+          return;
+        }
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = "es-CO";
+        u.rate = 0.9;
+        u.pitch = 1;
+        window.speechSynthesis.speak(u);
+      }
+
+      /* ═══════════════════════════════════════
+   VOICE RECOGNITION
+═══════════════════════════════════════ */
+      var recognition = null;
+      function openVoice() {
+        document.getElementById("voice-modal").classList.add("open");
+        document.getElementById("voice-result").style.display = "none";
+        document.getElementById("voice-status").textContent =
+          "Listo para escucharte";
+        document.getElementById("voice-instruction").textContent =
+          "Toca el micrófono y pregúntame algo";
+      }
+      function openVoiceReport() {
+        openVoice();
+        document.getElementById("voice-instruction").textContent =
+          "Dime qué problema ocurrió y lo reportamos automáticamente";
+      }
+      function closeVoice() {
+        document.getElementById("voice-modal").classList.remove("open");
+        if (recognition) {
+          try {
+            recognition.stop();
+          } catch (e) {}
+        }
+        state.listening = false;
+        document.getElementById("voice-btn-big").classList.remove("listening");
+      }
+      function toggleListening() {
+        if (!state.listening) startListening();
+        else stopListening();
+      }
+      function startListening() {
+        var SpeechRecog =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecog) {
+          state.listening = true;
+          document.getElementById("voice-btn-big").classList.add("listening");
+          document.getElementById("voice-status").textContent = "Escuchando...";
+          setTimeout(function () {
+            stopListening();
+            showVoiceAnswer(
+              "¿A qué hora pasa el camión?",
+              "El camión pasa hoy martes entre las 7 y las 9 de la mañana. Ya está en camino y llegará en aproximadamente 8 minutos a tu sector.",
+            );
+          }, 2500);
+          return;
+        }
+        recognition = new SpeechRecog();
+        recognition.lang = "es-CO";
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        state.listening = true;
+        document.getElementById("voice-btn-big").classList.add("listening");
+        document.getElementById("voice-status").textContent =
+          "Escuchando... habla ahora";
+        recognition.onresult = function (e) {
+          var q = e.results[0][0].transcript;
+          stopListening();
+          processVoiceQuery(q);
+        };
+        recognition.onerror = function () {
+          stopListening();
+          document.getElementById("voice-status").textContent =
+            "No te escuché bien. Intenta de nuevo.";
+        };
+        recognition.onend = function () {
+          state.listening = false;
+        };
+        recognition.start();
+      }
+      function stopListening() {
+        state.listening = false;
+        document.getElementById("voice-btn-big").classList.remove("listening");
+        document.getElementById("voice-status").textContent = "Procesando...";
+        if (recognition) {
+          try {
+            recognition.stop();
+          } catch (e) {}
+        }
+      }
+      function processVoiceQuery(q) {
+        var ql = q.toLowerCase(),
+          ans;
+        if (
+          ql.includes("camión") ||
+          ql.includes("hora") ||
+          ql.includes("pasa") ||
+          ql.includes("horario")
+        )
+          ans =
+            "El camión de aseo pasa hoy martes entre las 7 y las 9 de la mañana. Ya está cerca, llegará en unos 8 minutos.";
+        else if (
+          ql.includes("retraso") ||
+          ql.includes("tarda") ||
+          ql.includes("demora")
+        )
+          ans =
+            "Hay un posible retraso de 10 a 15 minutos por la lluvia de esta mañana.";
+        else if (
+          ql.includes("report") ||
+          ql.includes("problem") ||
+          ql.includes("basura")
+        ) {
+          ans =
+            "Te llevaré a la pantalla de reportes para que puedas informar el problema.";
+          setTimeout(function () {
+            closeVoice();
+            goTo("report");
+          }, 2500);
+        } else if (ql.includes("premium") || ql.includes("beneficio"))
+          ans =
+            "El plan Premium cuesta 5 mil pesos al mes y te da noticias exclusivas, alertas anticipadas y más beneficios.";
+        else
+          ans =
+            'Entendí: "' +
+            q +
+            '". Puedo ayudarte con horarios, reportes, alertas y la cuenta Premium. ¿Qué necesitas saber?';
+        showVoiceAnswer(q, ans);
+      }
+      function showVoiceAnswer(q, ans) {
+        var r = document.getElementById("voice-result");
+        r.innerHTML =
+          "<strong>Preguntaste:</strong> " +
+          q +
+          "<br><br><strong>Respuesta:</strong> " +
+          ans;
+        r.style.display = "block";
+        document.getElementById("voice-status").textContent = "Respondiendo...";
+        speak(ans);
+      }
+
+      /* ═══════════════════════════════════════
+   REPORTS
+═══════════════════════════════════════ */
+      function sendReport(type) {
+        toast('Reporte enviado: "' + type + '". Gracias.');
+        speak(
+          "Tu reporte fue enviado. Gracias por mejorar el servicio en tu barrio.",
+        );
+      }
+
+      /* ═══════════════════════════════════════
+   FONT SIZE
+═══════════════════════════════════════ */
+      function increaseFontSize() {
+        document.body.classList.add("mode-senior");
+        toast("Letra grande activada");
+      }
+      function maxFontSize() {
+        document.body.classList.add("mode-senior");
+        toast("Letra grande activada");
+      }
+      function resetFontSize() {
+        document.body.className = document.body.className
+          .replace(/mode-\w+/g, "")
+          .trim();
+        toast("Tamaño normal restaurado");
+      }
+      function applyMode(mode) {
+        document.body.className = document.body.className
+          .replace(/mode-\w+/g, "")
+          .trim();
+        if (mode === "senior") document.body.classList.add("mode-senior");
+        if (mode === "expert") document.body.classList.add("mode-expert");
+      }
+
+      /* ═══════════════════════════════════════
+   VOICE AUTO
+═══════════════════════════════════════ */
+      function toggleVoiceAuto() {
+        state.voiceAutoRead = !state.voiceAutoRead;
+        document
+          .getElementById("voice-toggle")
+          .classList.toggle("on", state.voiceAutoRead);
+        toast(
+          state.voiceAutoRead
+            ? "Lectura de voz activada"
+            : "Lectura de voz desactivada",
+        );
+      }
+
+      /* ═══════════════════════════════════════
+   EDIT ZONE
+═══════════════════════════════════════ */
+      function editZone() {
+        var z = prompt("Escribe el nombre de tu barrio:", state.userZone);
+        if (z && z.trim()) {
+          state.userZone = z.trim();
+          updateUI();
+          toast("Zona actualizada: " + state.userZone);
+        }
+      }
+
+      /* ═══════════════════════════════════════
+   PREMIUM MODAL
+═══════════════════════════════════════ */
+      function openPremiumModal() {
+        document.getElementById("premium-modal").classList.add("open");
+      }
+      function closePremiumModal() {
+        document.getElementById("premium-modal").classList.remove("open");
+      }
+      function activatePremium() {
+        state.isPremium = true;
+        closePremiumModal();
+        updateUI();
+        toast("¡Premium activado! Disfruta tus beneficios.");
+        speak(
+          "Felicitaciones. Tu cuenta Premium ha sido activada. Ahora tienes acceso a noticias exclusivas, alertas anticipadas y mucho más.",
+        );
+      }
+      function cancelPremium() {
+        state.isPremium = false;
+        updateUI();
+        toast("Suscripción Premium cancelada.");
+      }
+
+      /* ═══════════════════════════════════════
+   CLOSE MODALS ON OVERLAY TAP
+═══════════════════════════════════════ */
+      document.querySelectorAll(".modal-overlay").forEach(function (overlay) {
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) {
+            if (overlay.id === "premium-modal") closePremiumModal();
+            if (overlay.id === "voice-modal") closeVoice();
+          }
+        });
+      });
+
+      // Prevent auth modal from closing on overlay tap
+      document
+        .getElementById("auth-modal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            // Only close if logged in (i.e. was opened from profile)
+            if (state.isLoggedIn) this.classList.remove("open");
+          }
+        });
+
+      /* ═══════════════════════════════════════
+   iOS: prevent scroll bounce on modals
+═══════════════════════════════════════ */
+      document.querySelectorAll(".auth-sheet, .modal").forEach(function (el) {
+        el.addEventListener(
+          "touchmove",
+          function (e) {
+            e.stopPropagation();
+          },
+          { passive: true },
+        );
+      });
+
+      /* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+      updateUI();
+      // Show splash on start
+      document.getElementById("auth-splash").style.display = "flex";
+    </script>
+  </body>
+</html>
