@@ -7,7 +7,6 @@
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="mobile-web-app-capable" content="yes" />
     <meta
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
@@ -15,6 +14,10 @@
     <meta name="theme-color" content="#0a3d2e" />
     <title>AseoYa</title>
     <link rel="manifest" href="./manifest.json" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* ═══ TOKENS ═══ */
       :root {
@@ -151,27 +154,23 @@
         justify-content: center;
       }
       .splash-logo {
-        width: 88px;
-        height: 88px;
-        background: var(--sage);
-        border-radius: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 28px;
-        box-shadow: 0 12px 40px rgba(45, 158, 107, 0.45);
       }
       .splash-logo svg {
-        width: 50px;
-        height: 50px;
+        width: 160px;
+        height: 160px;
         fill: #fff;
       }
       .splash-title {
         font-family: var(--font-display);
-        font-size: 52px;
+        font-size: 58px;
         color: #fff;
         letter-spacing: -1px;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
       }
       .splash-sub {
         color: rgba(255, 255, 255, 0.6);
@@ -298,15 +297,10 @@
       }
 
       .auth-logo-sm {
-        width: 56px;
-        height: 56px;
-        background: var(--leaf);
-        border-radius: 18px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: 0 auto 18px;
-        box-shadow: 0 6px 20px rgba(26, 102, 71, 0.35);
       }
       .auth-logo-sm svg {
         width: 30px;
@@ -1496,6 +1490,575 @@
         stroke-width: 2.5;
         fill: none;
       }
+
+      /* ═══ CLOSE SPLASH BTN ═══ */
+      .auth-btn-close {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: transparent;
+        border: none;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: var(--t-sm);
+        font-weight: 600;
+        font-family: var(--font-body);
+        cursor: pointer;
+        margin-top: 4px;
+        transition: color 0.18s ease;
+        -webkit-appearance: none;
+      }
+      .auth-btn-close:active {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* ═══ AD SYSTEM ═══ */
+      #ad-overlay.open {
+        display: flex !important;
+      }
+      #ad-top-banner.show {
+        display: block !important;
+      }
+
+      /* ═══ ECO TIPS AUTO-BANNER ═══ */
+      #eco-tip-banner {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%) translateY(20px);
+        width: calc(100% - 32px);
+        max-width: 398px;
+        background: linear-gradient(135deg, #0a3d2e, #1a6647);
+        border-radius: var(--r-md);
+        padding: 14px 18px;
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        z-index: 200;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+        box-shadow: 0 8px 32px rgba(10, 61, 46, 0.35);
+      }
+      #eco-tip-banner.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+        pointer-events: auto;
+      }
+      .eco-tip-icon {
+        font-size: 22px;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .eco-tip-body {
+        flex: 1;
+      }
+      .eco-tip-title {
+        font-size: var(--t-xs);
+        font-weight: 700;
+        color: var(--mint);
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .eco-tip-text {
+        font-size: var(--t-sm);
+        color: rgba(255, 255, 255, 0.9);
+        line-height: 1.45;
+      }
+      .eco-tip-close {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 18px;
+        cursor: pointer;
+        padding: 2px 0 0;
+        flex-shrink: 0;
+        line-height: 1;
+        font-family: inherit;
+      }
+
+      /* ═══ CHAT ASSISTANT ═══ */
+      .chat-bubble {
+        max-width: 80%;
+        padding: 12px 16px;
+        border-radius: 18px;
+        font-size: var(--t-sm);
+        line-height: 1.55;
+        animation: fadeUp 0.2s ease;
+      }
+      .chat-bubble-bot {
+        background: var(--pale);
+        color: var(--ink);
+        border-radius: 4px 18px 18px 18px;
+        align-self: flex-start;
+        border: 1px solid var(--border);
+      }
+      .chat-bubble-user {
+        background: var(--leaf);
+        color: #fff;
+        border-radius: 18px 18px 4px 18px;
+        align-self: flex-end;
+      }
+      .chat-row {
+        display: flex;
+        gap: 8px;
+        align-items: flex-end;
+      }
+      .chat-row-bot {
+        justify-content: flex-start;
+      }
+      .chat-row-user {
+        justify-content: flex-end;
+      }
+      .chat-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--leaf);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .chat-avatar svg {
+        width: 16px;
+        height: 16px;
+      }
+      .chat-chip {
+        background: var(--pale);
+        border: 1.5px solid var(--border);
+        border-radius: 20px;
+        padding: 7px 14px;
+        font-size: var(--t-xs);
+        font-weight: 600;
+        color: var(--slate);
+        white-space: nowrap;
+        cursor: pointer;
+        font-family: var(--font-body);
+        flex-shrink: 0;
+        transition: all 0.15s;
+      }
+      .chat-chip:active {
+        background: var(--mint);
+        border-color: var(--sage);
+        color: var(--forest);
+      }
+      .chat-typing {
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        padding: 12px 16px;
+      }
+      .chat-typing span {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--mist);
+        animation: typingDot 1.2s infinite;
+      }
+      .chat-typing span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .chat-typing span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes typingDot {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+          opacity: 0.4;
+        }
+        30% {
+          transform: translateY(-5px);
+          opacity: 1;
+        }
+      }
+      #voice-btn-big.listening {
+        background: var(--red-lt) !important;
+        border-color: var(--red) !important;
+        animation: voicePulse2 1.2s infinite;
+      }
+      #voice-btn-big.listening svg {
+        stroke: var(--red) !important;
+      }
+      @keyframes voicePulse2 {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 0 10px rgba(192, 57, 43, 0);
+        }
+      }
+
+      /* ═══ ACCESSIBILITY BIG BUTTONS ═══ */
+      .acc-big-btn {
+        border: 2px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        background: #fff;
+        min-height: 76px;
+      }
+      .acc-big-btn:active {
+        transform: scale(0.99);
+      }
+      .acc-big-btn.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .acc-big-icon {
+        font-size: 28px;
+        flex-shrink: 0;
+        width: 48px;
+        text-align: center;
+      }
+      .acc-big-info {
+        flex: 1;
+      }
+      .acc-big-info h3 {
+        font-size: var(--t-md);
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 3px;
+      }
+      .acc-big-info p {
+        font-size: var(--t-sm);
+        color: var(--mist);
+        line-height: 1.4;
+      }
+      .acc-big-btn.selected .acc-check {
+        background: var(--sage);
+        border-color: var(--sage);
+        box-shadow: inset 0 0 0 4px #fff;
+      }
+
+      /* ═══ TUTORIAL OVERLAY ═══ */
+      #tutorial-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 900;
+        background: var(--forest);
+        flex-direction: column;
+        overflow: hidden;
+      }
+      #tutorial-overlay.open {
+        display: flex;
+      }
+      .tut-slides {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      .tut-slide {
+        display: none;
+        flex: 1;
+        flex-direction: column;
+        padding: 0;
+        animation: fadeUp 0.3s ease;
+      }
+      .tut-slide.active {
+        display: flex;
+      }
+      .tut-visual {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 28px 20px;
+        background: linear-gradient(160deg, var(--forest) 0%, #07271c 100%);
+        position: relative;
+        overflow: hidden;
+      }
+      .tut-visual::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(45, 158, 107, 0.1);
+        pointer-events: none;
+      }
+      .tut-visual::after {
+        content: "";
+        position: absolute;
+        bottom: -40px;
+        left: -40px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(45, 158, 107, 0.07);
+        pointer-events: none;
+      }
+      .tut-emoji {
+        font-size: 72px;
+        margin-bottom: 18px;
+        filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.3));
+        animation: tutEmoji 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+      }
+      @keyframes tutEmoji {
+        from {
+          transform: scale(0.6) translateY(10px);
+          opacity: 0;
+        }
+        to {
+          transform: none;
+          opacity: 1;
+        }
+      }
+      .tut-illus {
+        width: 200px;
+        height: 200px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1.5px solid rgba(255, 255, 255, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 18px;
+        position: relative;
+        z-index: 1;
+      }
+      .tut-step-badge {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 14px;
+        border-radius: 20px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .tut-content {
+        background: #fff;
+        border-radius: var(--r-xl) var(--r-xl) 0 0;
+        padding: 28px 24px;
+        flex-shrink: 0;
+        padding-bottom: max(28px, env(safe-area-inset-bottom));
+      }
+      .tut-num {
+        font-size: var(--t-xs);
+        font-weight: 700;
+        color: var(--sage);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 6px;
+      }
+      .tut-title {
+        font-size: var(--t-xl);
+        font-weight: 800;
+        color: var(--ink);
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      .tut-desc {
+        font-size: var(--t-base);
+        color: var(--slate);
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+      .tut-dots {
+        display: flex;
+        gap: 7px;
+        justify-content: center;
+        margin-bottom: 18px;
+      }
+      .tut-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--border);
+        transition: all 0.3s;
+      }
+      .tut-dot.active {
+        background: var(--sage);
+        width: 22px;
+        border-radius: 4px;
+      }
+      .tut-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .tut-btn-main {
+        flex: 1;
+        padding: 17px;
+        font-size: var(--t-md);
+        font-weight: 700;
+        font-family: var(--font-body);
+        background: var(--leaf);
+        color: #fff;
+        border: none;
+        border-radius: var(--r-md);
+        cursor: pointer;
+        transition: all 0.18s;
+        min-height: 56px;
+        -webkit-appearance: none;
+        box-shadow: 0 4px 14px rgba(26, 102, 71, 0.35);
+      }
+      .tut-btn-main:active {
+        transform: scale(0.98);
+        background: #1e7a58;
+      }
+      .tut-btn-skip {
+        padding: 17px 20px;
+        font-size: var(--t-sm);
+        font-weight: 600;
+        font-family: var(--font-body);
+        background: var(--pale);
+        color: var(--mist);
+        border: 1.5px solid var(--border);
+        border-radius: var(--r-md);
+        cursor: pointer;
+        transition: all 0.18s;
+        min-height: 56px;
+        -webkit-appearance: none;
+      }
+      .tut-btn-skip:active {
+        transform: scale(0.98);
+      }
+
+      /* ═══ ACCESSIBILITY STEP ═══ */
+      .acc-option {
+        border: 2px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 16px 18px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #fff;
+      }
+      .acc-option.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .acc-option-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--mint);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 22px;
+      }
+      .acc-option-info h4 {
+        font-size: var(--t-base);
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .acc-option-info p {
+        font-size: var(--t-xs);
+        color: var(--mist);
+        margin-top: 2px;
+        line-height: 1.4;
+      }
+      .acc-check {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--border);
+        margin-left: auto;
+        flex-shrink: 0;
+        transition: all 0.2s;
+      }
+      .acc-option.selected .acc-check {
+        background: var(--sage);
+        border-color: var(--sage);
+        box-shadow: inset 0 0 0 4px #fff;
+      }
+
+      /* ═══ VOICE OPTION STEP ═══ */
+      .voice-choice {
+        border: 2px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 18px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #fff;
+        text-align: center;
+      }
+      .voice-choice.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .voice-choice-icon {
+        font-size: 36px;
+        margin-bottom: 8px;
+      }
+      .voice-choice h4 {
+        font-size: var(--t-base);
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 4px;
+      }
+      .voice-choice p {
+        font-size: var(--t-xs);
+        color: var(--mist);
+        line-height: 1.4;
+      }
+
+      /* ═══ FONT SIZE STEP ═══ */
+      .font-choice {
+        border: 2px solid var(--border);
+        border-radius: var(--r-md);
+        padding: 18px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .font-choice.selected {
+        border-color: var(--sage);
+        background: var(--pale);
+      }
+      .font-choice-preview {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: var(--pale);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: 800;
+        color: var(--forest);
+      }
+      .font-choice-info h4 {
+        font-size: var(--t-base);
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 2px;
+      }
+      .font-choice-info p {
+        font-size: var(--t-xs);
+        color: var(--mist);
+      }
+      .font-choice .acc-check {
+        margin-left: auto;
+      }
     </style>
   </head>
   <body>
@@ -1504,20 +2067,142 @@
 ══════════════════════════════════════════════════ -->
     <div id="auth-splash">
       <div class="splash-top">
-        <div class="splash-logo">
-          <svg viewBox="0 0 48 48">
-            <path
-              d="M8 36c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4V20L28 8H12c-2.2 0-4 1.8-4 4v24z"
-              opacity=".45"
+        <div
+          class="splash-logo"
+          style="
+            background: transparent;
+            box-shadow: none;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 32px;
+          "
+        >
+          <svg
+            viewBox="0 0 110 110"
+            xmlns="http://www.w3.org/2000/svg"
+            width="160"
+            height="160"
+          >
+            <defs>
+              <radialGradient id="bgGrad" cx="50%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#3ab87a" />
+                <stop offset="100%" stop-color="#0a5c38" />
+              </radialGradient>
+              <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow
+                  dx="0"
+                  dy="4"
+                  stdDeviation="6"
+                  flood-color="#0a3d2e"
+                  flood-opacity="0.4"
+                />
+              </filter>
+            </defs>
+            <!-- Outer ring -->
+            <circle
+              cx="55"
+              cy="55"
+              r="52"
+              fill="url(#bgGrad)"
+              filter="url(#shadow)"
             />
-            <path d="M28 8l12 12H32c-2.2 0-4-1.8-4-4V8z" />
-            <path
-              d="M16 22h16M16 28h12M16 34h8"
-              stroke="#fff"
-              stroke-width="2.5"
-              stroke-linecap="round"
+            <circle
+              cx="55"
+              cy="55"
+              r="50"
               fill="none"
+              stroke="rgba(255,255,255,0.25)"
+              stroke-width="2"
             />
+            <!-- Inner ring accent -->
+            <circle cx="55" cy="55" r="44" fill="rgba(255,255,255,0.07)" />
+            <!-- Truck body -->
+            <rect x="18" y="44" width="48" height="24" rx="4" fill="#ffffff" />
+            <!-- Truck cabin -->
+            <rect x="64" y="50" width="22" height="18" rx="3" fill="#e8f8f0" />
+            <!-- Cabin window -->
+            <rect
+              x="67"
+              y="53"
+              width="12"
+              height="9"
+              rx="2"
+              fill="#2d9e6b"
+              opacity="0.6"
+            />
+            <!-- Windshield detail -->
+            <line
+              x1="75"
+              y1="53"
+              x2="75"
+              y2="62"
+              stroke="rgba(255,255,255,0.4)"
+              stroke-width="1"
+            />
+            <!-- Truck wheels -->
+            <circle cx="32" cy="70" r="7" fill="#0a3d2e" />
+            <circle cx="32" cy="70" r="3.5" fill="#c8f0dc" />
+            <circle cx="56" cy="70" r="7" fill="#0a3d2e" />
+            <circle cx="56" cy="70" r="3.5" fill="#c8f0dc" />
+            <circle cx="77" cy="70" r="6" fill="#0a3d2e" />
+            <circle cx="77" cy="70" r="3" fill="#c8f0dc" />
+            <!-- Trash can icon on truck side -->
+            <rect
+              x="26"
+              y="49"
+              width="10"
+              height="14"
+              rx="1.5"
+              fill="#2d9e6b"
+              opacity="0.8"
+            />
+            <rect x="24" y="48" width="14" height="3" rx="1" fill="#2d9e6b" />
+            <line
+              x1="29"
+              y1="51"
+              x2="29"
+              y2="61"
+              stroke="rgba(255,255,255,0.5)"
+              stroke-width="1"
+            />
+            <line
+              x1="32"
+              y1="51"
+              x2="32"
+              y2="61"
+              stroke="rgba(255,255,255,0.5)"
+              stroke-width="1"
+            />
+            <!-- Checkmark / sparkle on truck -->
+            <path
+              d="M42 52 l4 4 l8 -8"
+              stroke="#0a5c38"
+              stroke-width="2.5"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <!-- Small leaf decorations -->
+            <ellipse
+              cx="22"
+              cy="38"
+              rx="5"
+              ry="8"
+              fill="rgba(255,255,255,0.2)"
+              transform="rotate(-30 22 38)"
+            />
+            <ellipse
+              cx="90"
+              cy="38"
+              rx="5"
+              ry="8"
+              fill="rgba(255,255,255,0.15)"
+              transform="rotate(30 90 38)"
+            />
+            <!-- Stars/sparkles -->
+            <circle cx="88" cy="28" r="2" fill="rgba(255,255,255,0.7)" />
+            <circle cx="20" cy="30" r="1.5" fill="rgba(255,255,255,0.5)" />
+            <circle cx="55" cy="20" r="2.5" fill="rgba(255,255,255,0.6)" />
           </svg>
         </div>
         <div class="splash-title">AseoYa</div>
@@ -1527,7 +2212,6 @@
       </div>
 
       <div class="splash-actions">
-        <p>Bogotá, Colombia</p>
         <button class="auth-btn-primary" onclick="openAuthModal('login')">
           Iniciar sesión
         </button>
@@ -1545,13 +2229,75 @@
         <!-- STEP: LOGIN -->
         <div class="auth-step active" id="step-login">
           <div class="auth-handle"></div>
-          <div class="auth-logo-sm">
-            <svg viewBox="0 0 48 48">
-              <path
-                d="M8 36c0 2.2 1.8 4 4 4h24c2.2 0 4-1.8 4-4V20L28 8H12c-2.2 0-4 1.8-4 4v24z"
-                opacity=".5"
+          <div
+            class="auth-logo-sm"
+            style="
+              background: transparent;
+              box-shadow: none;
+              width: 64px;
+              height: 64px;
+            "
+          >
+            <svg
+              viewBox="0 0 110 110"
+              xmlns="http://www.w3.org/2000/svg"
+              width="64"
+              height="64"
+            >
+              <defs>
+                <radialGradient id="bgGrad2" cx="50%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#3ab87a" />
+                  <stop offset="100%" stop-color="#0a5c38" />
+                </radialGradient>
+              </defs>
+              <circle cx="55" cy="55" r="52" fill="url(#bgGrad2)" />
+              <circle
+                cx="55"
+                cy="55"
+                r="50"
+                fill="none"
+                stroke="rgba(255,255,255,0.25)"
+                stroke-width="2"
               />
-              <path d="M28 8l12 12H32c-2.2 0-4-1.8-4-4V8z" />
+              <rect
+                x="18"
+                y="44"
+                width="48"
+                height="24"
+                rx="4"
+                fill="#ffffff"
+              />
+              <rect
+                x="64"
+                y="50"
+                width="22"
+                height="18"
+                rx="3"
+                fill="#e8f8f0"
+              />
+              <rect
+                x="67"
+                y="53"
+                width="12"
+                height="9"
+                rx="2"
+                fill="#2d9e6b"
+                opacity="0.6"
+              />
+              <circle cx="32" cy="70" r="7" fill="#0a3d2e" />
+              <circle cx="32" cy="70" r="3.5" fill="#c8f0dc" />
+              <circle cx="56" cy="70" r="7" fill="#0a3d2e" />
+              <circle cx="56" cy="70" r="3.5" fill="#c8f0dc" />
+              <circle cx="77" cy="70" r="6" fill="#0a3d2e" />
+              <circle cx="77" cy="70" r="3" fill="#c8f0dc" />
+              <path
+                d="M42 52 l4 4 l8 -8"
+                stroke="#0a5c38"
+                stroke-width="2.5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </div>
           <h2>Bienvenido de nuevo</h2>
@@ -1588,6 +2334,22 @@
           <div class="auth-link">
             ¿No tienes cuenta?
             <span onclick="switchStep('register')">Regístrate aquí</span>
+          </div>
+          <div style="text-align: center; margin-top: 12px">
+            <button
+              onclick="closeAuthModal()"
+              style="
+                background: none;
+                border: none;
+                color: var(--mist);
+                font-size: var(--t-sm);
+                cursor: pointer;
+                font-family: var(--font-body);
+                padding: 8px 16px;
+              "
+            >
+              ✕ Cerrar
+            </button>
           </div>
         </div>
 
@@ -1630,7 +2392,16 @@
             />
           </div>
           <div class="auth-field">
-            <label>Tu barrio en Bogotá</label>
+            <label>Ciudad</label>
+            <input
+              type="text"
+              id="reg-city"
+              placeholder="Ej: Bogotá, Medellín, Cali..."
+              autocomplete="address-level2"
+            />
+          </div>
+          <div class="auth-field">
+            <label>Tu barrio</label>
             <input
               type="text"
               id="reg-zone"
@@ -1643,12 +2414,213 @@
             onclick="doRegister()"
             id="reg-btn"
           >
-            Crear cuenta gratis
+            Continuar
           </button>
           <div class="auth-link">
             ¿Ya tienes cuenta?
             <span onclick="switchStep('login')">Inicia sesión</span>
           </div>
+          <div style="text-align: center; margin-top: 12px">
+            <button
+              onclick="switchStep('login')"
+              style="
+                background: none;
+                border: none;
+                color: var(--mist);
+                font-size: var(--t-sm);
+                cursor: pointer;
+                font-family: var(--font-body);
+                padding: 8px 16px;
+              "
+            >
+              ← Volver al inicio
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP: DIFICULTAD VISUAL/AUDITIVA -->
+        <div class="auth-step" id="step-accessibility">
+          <div class="auth-handle"></div>
+          <div style="text-align: center; margin-bottom: 20px">
+            <div style="font-size: 48px; margin-bottom: 10px">👁️</div>
+            <h2 style="font-size: var(--t-xl)">
+              ¿Tienes alguna dificultad visual o auditiva?
+            </h2>
+            <p class="auth-desc">
+              Queremos adaptar la app para que sea cómoda y fácil de usar para
+              ti
+            </p>
+          </div>
+
+          <div
+            class="acc-big-btn"
+            id="acc-diff-yes"
+            onclick="selectDifficulty(true)"
+          >
+            <div class="acc-big-icon">✅</div>
+            <div class="acc-big-info">
+              <h3>Sí, tengo dificultad</h3>
+              <p>Dificultad para ver, escuchar o ambas</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <div
+            class="acc-big-btn selected"
+            id="acc-diff-no"
+            onclick="selectDifficulty(false)"
+          >
+            <div class="acc-big-icon">👍</div>
+            <div class="acc-big-info">
+              <h3>No, estoy bien</h3>
+              <p>Uso normal sin dificultades especiales</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-green"
+            style="margin-top: 12px"
+            onclick="continueAccessibility()"
+          >
+            Continuar
+          </button>
+        </div>
+
+        <!-- STEP: TAMAÑO DE LETRA (solo si tiene dificultad) -->
+        <div class="auth-step" id="step-font-setup">
+          <div class="auth-handle"></div>
+          <div style="text-align: center; margin-bottom: 16px">
+            <div style="font-size: 40px; margin-bottom: 8px">🔡</div>
+            <h2 style="font-size: var(--t-xl)">
+              ¿Cómo deseas el tamaño del texto?
+            </h2>
+            <p class="auth-desc">Elige el tamaño con el que veas mejor</p>
+          </div>
+
+          <div
+            class="font-choice selected"
+            id="fc-large"
+            onclick="selectFontSetup('large')"
+          >
+            <div class="font-choice-preview" style="font-size: 28px">Aa</div>
+            <div class="font-choice-info">
+              <h4>Letra grande</h4>
+              <p>Más fácil de leer — recomendada</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <div
+            class="font-choice"
+            id="fc-normal"
+            onclick="selectFontSetup('normal')"
+          >
+            <div class="font-choice-preview" style="font-size: 20px">Aa</div>
+            <div class="font-choice-info">
+              <h4>Letra normal</h4>
+              <p>Tamaño estándar</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-green"
+            style="margin-top: 8px"
+            onclick="continueFontSetup()"
+          >
+            Continuar
+          </button>
+        </div>
+
+        <!-- STEP: ASISTENTE DE VOZ (solo si tiene dificultad) -->
+        <div class="auth-step" id="step-voice-setup">
+          <div class="auth-handle"></div>
+          <div style="text-align: center; margin-bottom: 16px">
+            <div style="font-size: 40px; margin-bottom: 8px">🔊</div>
+            <h2 style="font-size: var(--t-xl)">
+              ¿Deseas activar el asistente de voz y chat por voz?
+            </h2>
+            <p class="auth-desc">
+              La app leerá en voz alta las alertas y podrás hablarle al
+              asistente
+            </p>
+          </div>
+
+          <div
+            class="voice-choice"
+            id="vc-yes"
+            onclick="selectVoiceSetup(true)"
+          >
+            <div class="voice-choice-icon">🔊</div>
+            <h4>Sí, activar el asistente de voz</h4>
+            <p>
+              La app me avisa en voz alta cuando el camión esté cerca y puedo
+              hacer preguntas hablando.
+            </p>
+          </div>
+
+          <div
+            class="voice-choice selected"
+            id="vc-no"
+            onclick="selectVoiceSetup(false)"
+          >
+            <div class="voice-choice-icon">🔇</div>
+            <h4>No, solo la pantalla por ahora</h4>
+            <p>Puedo activarlo después en Perfil si cambio de opinión.</p>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-green"
+            style="margin-top: 8px"
+            onclick="continueVoiceSetup()"
+          >
+            Continuar
+          </button>
+        </div>
+
+        <!-- STEP: TUTORIAL -->
+        <div class="auth-step" id="step-tutorial-ask">
+          <div class="auth-handle"></div>
+          <div style="text-align: center; margin-bottom: 20px">
+            <div style="font-size: 48px; margin-bottom: 10px">📱</div>
+            <h2 style="font-size: var(--t-xl)">
+              ¿Deseas ver un tutorial rápido?
+            </h2>
+            <p class="auth-desc">
+              Te mostramos cómo usar AseoYa en menos de un minuto. Muy fácil.
+            </p>
+          </div>
+
+          <div class="acc-big-btn" id="tut-yes" onclick="selectTutorial(true)">
+            <div class="acc-big-icon">▶️</div>
+            <div class="acc-big-info">
+              <h3>Sí, quiero el tutorial</h3>
+              <p>Muéstrame cómo funciona la app</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <div
+            class="acc-big-btn selected"
+            id="tut-no"
+            onclick="selectTutorial(false)"
+          >
+            <div class="acc-big-icon">🚀</div>
+            <div class="acc-big-info">
+              <h3>No, entrar directamente</h3>
+              <p>Ya sé cómo usarla o lo aprendo solo</p>
+            </div>
+            <div class="acc-check"></div>
+          </div>
+
+          <button
+            class="auth-sheet-btn asb-green"
+            style="margin-top: 12px"
+            onclick="continueTutorialAsk()"
+          >
+            Continuar
+          </button>
         </div>
 
         <!-- STEP: ELEGIR PLAN -->
@@ -1922,7 +2894,7 @@
           Buenos días, <span id="user-name-lbl">Carlos</span>
         </div>
         <h1 class="hdr-title">Tu servicio<br />de aseo</h1>
-        <p class="hdr-sub" id="hdr-zone">Barrio San Luis · Chapinero</p>
+        <p class="hdr-sub" id="hdr-zone">Barrio San Luis · Bogotá</p>
         <div id="premium-badge" class="badge-premium" style="display: none">
           <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
             <path
@@ -2005,14 +2977,7 @@
             <div class="map-you"></div>
             <div class="map-label">Tu ubicación</div>
           </div>
-          <button
-            class="btn btn-outline"
-            onclick="
-              speak(
-                'El camión está a 8 minutos de tu sector. Saca la basura ahora.',
-              )
-            "
-          >
+          <button class="btn btn-outline" onclick="speakETA()">
             <svg
               width="20"
               height="20"
@@ -2462,41 +3427,62 @@
         <p id="notif-count">3 nuevas hoy</p>
       </div>
       <div class="content">
-        <div class="sec-title">Hoy · martes 13 mayo</div>
-        <div class="notif-item">
-          <div class="notif-dot"></div>
-          <div>
-            <div class="notif-title">Camión a 8 minutos</div>
-            <div class="notif-body">
-              Ruta 4 está llegando a tu sector. Saca la basura ahora.
+        <!-- FREE ALERTS SECTION -->
+        <div class="sec-title">
+          Hoy · martes 13 mayo
+          <span
+            style="
+              font-size: var(--t-xs);
+              color: var(--mist);
+              font-weight: 500;
+              text-transform: none;
+              letter-spacing: 0;
+            "
+          >
+            — Alertas básicas</span
+          >
+        </div>
+        <div id="free-alerts-section">
+          <div class="notif-item">
+            <div class="notif-dot"></div>
+            <div>
+              <div class="notif-title">El camión pasará pronto</div>
+              <div class="notif-body">
+                Ruta 4 está llegando a tu sector. Saca la basura ahora.
+              </div>
+              <div class="notif-time">7:34 AM</div>
             </div>
-            <div class="notif-time">7:34 AM</div>
+          </div>
+          <div class="notif-item">
+            <div class="notif-dot"></div>
+            <div>
+              <div class="notif-title">Saca la basura</div>
+              <div class="notif-body">
+                Recordatorio: el camión pasa esta mañana entre 7–9 AM.
+              </div>
+              <div class="notif-time">6:30 AM</div>
+            </div>
+          </div>
+          <div class="notif-item">
+            <div class="notif-dot read"></div>
+            <div>
+              <div class="notif-title" style="font-weight: 500">
+                Ruta completada
+              </div>
+              <div class="notif-body">
+                El camión completó la ruta de tu barrio ayer. Cobertura 98%.
+              </div>
+              <div class="notif-time">Ayer · 8:52 AM</div>
+            </div>
           </div>
         </div>
-        <div class="notif-item">
-          <div class="notif-dot"></div>
-          <div>
-            <div class="notif-title">Posible retraso por lluvia</div>
-            <div class="notif-body">
-              La ruta puede demorarse 10–15 minutos por las condiciones
-              climáticas.
-            </div>
-            <div class="notif-time">7:10 AM</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-dot"></div>
-          <div>
-            <div class="notif-title">Recordatorio de mañana</div>
-            <div class="notif-body">
-              Mañana pasa el camión entre 7–9 AM. Saca tu basura antes de las
-              6:45.
-            </div>
-            <div class="notif-time">Ayer · 8:00 PM</div>
-          </div>
-        </div>
+
+        <!-- PREMIUM ALERTS SECTION — visible only to premium users -->
         <div id="premium-notifs" style="display: none">
-          <div class="alert alert-gold" style="margin-top: 10px">
+          <div class="sec-title" style="margin-top: 10px">
+            Alertas Premium ⭐
+          </div>
+          <div class="alert alert-gold" style="margin-bottom: 8px">
             <div class="alert-icon">
               <svg
                 viewBox="0 0 24 24"
@@ -2510,24 +3496,153 @@
               </svg>
             </div>
             <div class="alert-body">
-              <h3>Alerta Premium anticipada</h3>
+              <h3>Alerta anticipada — 30 min</h3>
               <p>
                 Mañana habrá recolección especial de escombros en tu cuadra.
+                Solo notificado a Premium.
+              </p>
+            </div>
+          </div>
+          <div class="alert alert-amber" style="margin-bottom: 8px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"
+                />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Retraso por tráfico — Cra 7</h3>
+              <p>
+                Congestión vehicular causará 20–30 min de demora. Camión
+                reorientando ruta.
+              </p>
+            </div>
+          </div>
+          <div class="alert alert-amber" style="margin-bottom: 8px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"
+                />
+                <circle cx="12" cy="13" r="4" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Alerta climática</h3>
+              <p>
+                Lluvia fuerte prevista para las 8 AM. Posible retraso de 15 min.
+                Asegura tu basura.
+              </p>
+            </div>
+          </div>
+          <div class="alert alert-green" style="margin-bottom: 8px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Cambio de ruta detectado</h3>
+              <p>
+                Por obras en Calle 68, la ruta pasa por Cra 6 hoy. Saca la
+                basura al frente.
+              </p>
+            </div>
+          </div>
+          <div class="alert alert-green" style="margin-bottom: 8px">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14z"
+                />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Predicción inteligente</h3>
+              <p>
+                Según el historial, el camión llega a tu cuadra puntual el 87%
+                de los martes. Hoy debería llegar a las 7:40 AM.
+              </p>
+            </div>
+          </div>
+          <div class="alert alert-green">
+            <div class="alert-icon">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <div class="alert-body">
+              <h3>Reporte ciudadano confirmado</h3>
+              <p>
+                3 vecinos reportaron el camión pasando por tu cuadra hace 5 min.
+                En camino a tu puerta.
               </p>
             </div>
           </div>
         </div>
+
+        <!-- Premium wall for free users -->
         <div id="notif-wall" class="premium-wall">
+          <div style="font-size: 28px; margin-bottom: 10px">⭐</div>
           <h2>Alertas Premium</h2>
           <p>
-            Recibe notificaciones anticipadas, alertas de cambios de ruta y
-            avisos exclusivos.
+            Recibe alertas anticipadas 30 min antes, retrasos por tráfico,
+            clima, cambios de ruta, predicciones inteligentes y reportes
+            ciudadanos.
           </p>
+          <div
+            style="
+              font-size: var(--t-xs);
+              color: var(--slate);
+              line-height: 2;
+              margin: 14px 0;
+              text-align: left;
+            "
+          >
+            ✓ Alertas anticipadas 30 min antes<br />
+            ✓ Retrasos por tráfico en tiempo real<br />
+            ✓ Alertas de clima y condiciones<br />
+            ✓ Cambios de ruta automáticos<br />
+            ✓ Predicciones inteligentes<br />
+            ✓ Reportes ciudadanos verificados
+          </div>
           <button class="btn btn-gold" onclick="openPremiumModal()">
             Activar Premium
           </button>
         </div>
-        <div class="sec-title">Ayer · lunes 12 mayo</div>
+
+        <div class="sec-title" style="margin-top: 16px">
+          Ayer · lunes 12 mayo
+        </div>
         <div class="notif-item">
           <div class="notif-dot read"></div>
           <div>
@@ -2544,7 +3659,7 @@
           <div class="notif-dot read"></div>
           <div>
             <div class="notif-title" style="font-weight: 500">
-              Cambio de horario
+              Saca la basura
             </div>
             <div class="notif-body">
               El jueves el camión llegará a las 6:30 AM, media hora antes.
@@ -2571,7 +3686,7 @@
               style="font-size: var(--t-sm); color: rgba(255, 255, 255, 0.65)"
               id="profile-zone"
             >
-              Barrio San Luis · Chapinero
+              Barrio San Luis · Bogotá
             </div>
             <div id="profile-badge" style="display: none; margin-top: 8px">
               <span class="pill pill-gold">Premium</span>
@@ -2627,7 +3742,7 @@
           <p style="color: var(--amber); margin: 8px 0 14px">
             Estás disfrutando todos los beneficios exclusivos.
           </p>
-          <button class="btn-sm btn-sm-gray" onclick="cancelPremium()">
+          <button class="btn-sm btn-sm-gray" onclick="openCancelModal()">
             <div class="btn-icon btn-icon-gray">
               <svg
                 viewBox="0 0 24 24"
@@ -2682,39 +3797,36 @@
         <div
           style="
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 14px;
           "
         >
           <button
             class="btn-sm btn-sm-gray"
             style="justify-content: center; font-size: var(--t-sm)"
-            onclick="resetFontSize()"
+            onclick="setFontNormal()"
           >
-            Normal
+            <span style="font-size: 18px; margin-right: 6px">Aa</span> Normal
           </button>
           <button
             class="btn-sm btn-sm-green"
             style="justify-content: center; font-size: var(--t-base)"
-            onclick="increaseFontSize()"
+            onclick="setFontLarge()"
           >
-            Grande
-          </button>
-          <button
-            class="btn-sm btn-sm-green"
-            style="justify-content: center; font-size: var(--t-md)"
-            onclick="maxFontSize()"
-          >
-            Muy grande
+            <span style="font-size: 22px; margin-right: 6px">Aa</span> Grande
           </button>
         </div>
 
         <div class="sec-title">Mi zona</div>
-        <div class="sched-row" onclick="editZone()" style="cursor: pointer">
+        <div
+          class="sched-row"
+          onclick="openEditZoneModal()"
+          style="cursor: pointer"
+        >
           <div>
             <div class="sched-day" id="zone-display">Barrio San Luis</div>
-            <div class="sched-time">Ruta 4 · Zona Chapinero Norte</div>
+            <div class="sched-time" id="zone-city-display">Bogotá</div>
           </div>
           <svg
             width="20"
@@ -2799,167 +3911,1166 @@
     <!-- ════════════════════ TOAST ════════════════════ -->
     <div id="toast"></div>
 
-    <!-- ════════════════════ PREMIUM MODAL ════════════════════ -->
+    <!-- ════════════════════ PREMIUM MODAL (Plan selector + Payment) ════════════════════ -->
     <div class="modal-overlay" id="premium-modal">
-      <div class="modal">
+      <div
+        class="modal"
+        style="padding-bottom: max(36px, env(safe-area-inset-bottom))"
+      >
         <div class="modal-handle"></div>
-        <h2
-          style="
-            text-align: center;
-            color: var(--gold-dk);
-            font-family: var(--font-display);
-          "
-        >
-          Planes Premium
-        </h2>
-        <p style="text-align: center">Elige el plan que más te conviene</p>
-        <div class="card" style="margin-bottom: 12px">
-          <h3>Gratuito</h3>
-          <p style="font-size: var(--t-sm); color: var(--mist); margin: 8px 0">
-            Horarios, notificaciones básicas y reportes.
-          </p>
-          <div
-            style="font-size: var(--t-lg); font-weight: 800; color: var(--ink)"
-          >
-            $0 / mes
+
+        <!-- STEP 1: Plan selector -->
+        <div id="pm-step-plan">
+          <div style="text-align: center; margin-bottom: 20px">
+            <div style="font-size: 28px; margin-bottom: 8px">⭐</div>
+            <h2
+              style="
+                color: var(--gold-dk);
+                font-family: var(--font-display);
+                font-size: var(--t-xl);
+                margin-bottom: 4px;
+              "
+            >
+              Hazte Premium
+            </h2>
+            <p style="font-size: var(--t-sm); color: var(--mist)">
+              Sin anuncios, alertas anticipadas y mucho más
+            </p>
           </div>
+
+          <!-- Benefits comparison -->
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 10px;
+              margin-bottom: 20px;
+            "
+          >
+            <div
+              style="
+                background: var(--pale);
+                border-radius: var(--r-sm);
+                padding: 14px;
+                border: 1.5px solid var(--border);
+              "
+            >
+              <div
+                style="
+                  font-size: var(--t-xs);
+                  font-weight: 700;
+                  color: var(--mist);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                  margin-bottom: 10px;
+                "
+              >
+                Gratis
+              </div>
+              <div
+                style="
+                  font-size: var(--t-xs);
+                  color: var(--slate);
+                  line-height: 1.9;
+                "
+              >
+                ✓ Horarios básicos<br />
+                ✓ Alertas estándar<br />
+                ✓ Reportes simples<br />
+                <span style="color: var(--red)"
+                  >✗ Con anuncios<br />
+                  ✗ Sin alertas anticipadas<br />
+                  ✗ Sin noticias exclusivas</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: linear-gradient(135deg, #fef9ef, #fffde7);
+                border-radius: var(--r-sm);
+                padding: 14px;
+                border: 1.5px solid rgba(201, 146, 42, 0.4);
+              "
+            >
+              <div
+                style="
+                  font-size: var(--t-xs);
+                  font-weight: 700;
+                  color: var(--gold-dk);
+                  text-transform: uppercase;
+                  letter-spacing: 0.06em;
+                  margin-bottom: 10px;
+                "
+              >
+                ⭐ Premium
+              </div>
+              <div
+                style="
+                  font-size: var(--t-xs);
+                  color: var(--slate);
+                  line-height: 1.9;
+                "
+              >
+                ✓ Horarios completos<br />
+                ✓ <strong>Sin anuncios</strong><br />
+                ✓ Alertas 30 min antes<br />
+                ✓ Noticias exclusivas<br />
+                ✓ Reportes prioritarios<br />
+                ✓ Descuentos aliados
+              </div>
+            </div>
+          </div>
+
+          <!-- Plan cards -->
+          <div
+            id="pm-card-monthly"
+            class="plan-card plan-card-premium selected"
+            onclick="selectPmPlan('monthly')"
+            style="margin-bottom: 10px"
+          >
+            <span class="plan-badge">⭐ Más popular</span>
+            <div class="plan-card-header">
+              <div>
+                <div class="plan-name" style="color: var(--gold-dk)">
+                  Premium Mensual
+                </div>
+                <div class="plan-price" style="color: var(--gold)">
+                  $5.000 <span>/ mes</span>
+                </div>
+              </div>
+              <div class="plan-check">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+            </div>
+            <div class="plan-desc" style="color: var(--amber)">
+              Cancela cuando quieras. Sin compromisos.
+            </div>
+          </div>
+          <div
+            id="pm-card-annual"
+            class="plan-card plan-card-premium"
+            onclick="selectPmPlan('annual')"
+            style="margin-bottom: 16px"
+          >
+            <div class="plan-card-header">
+              <div>
+                <div class="plan-name" style="color: var(--gold-dk)">
+                  Premium Anual
+                </div>
+                <div class="plan-price" style="color: var(--gold)">
+                  $50.000 <span>/ año — ahorras $10.000</span>
+                </div>
+              </div>
+              <div class="plan-check">
+                <svg viewBox="0 0 12 12">
+                  <polyline points="2,6 5,9 10,3" />
+                </svg>
+              </div>
+            </div>
+            <div class="plan-desc" style="color: var(--amber)">
+              2 meses gratis. La mejor relación precio.
+            </div>
+          </div>
+
+          <button class="btn btn-gold" onclick="pmGoToPayment()">
+            Continuar al pago →
+          </button>
           <button
-            class="btn-sm btn-sm-gray"
-            style="margin-top: 12px"
+            class="btn btn-ghost"
+            style="margin-top: 8px"
             onclick="closePremiumModal()"
           >
-            <div class="btn-label-main">Continuar gratis</div>
+            Cancelar
           </button>
         </div>
-        <div class="card card-premium" style="margin-bottom: 12px">
-          <span class="pill pill-gold" style="margin-bottom: 10px"
-            >Más popular</span
-          >
-          <h3 style="color: var(--gold-dk)">Premium Mensual</h3>
-          <p style="font-size: var(--t-sm); color: var(--amber); margin: 8px 0">
-            Noticias exclusivas, alertas anticipadas, sin publicidad.
-          </p>
-          <div
+
+        <!-- STEP 2: Payment method -->
+        <div id="pm-step-payment" style="display: none">
+          <button
+            onclick="pmGoToPlan()"
             style="
-              font-size: var(--t-lg);
-              font-weight: 800;
-              color: var(--gold-dk);
+              background: none;
+              border: none;
+              color: var(--mist);
+              font-size: var(--t-sm);
+              cursor: pointer;
+              font-family: var(--font-body);
+              padding: 0 0 12px 0;
+              display: flex;
+              align-items: center;
+              gap: 6px;
             "
           >
-            $5.000 / mes
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Volver
+          </button>
+          <h2 style="margin-bottom: 4px">Método de pago</h2>
+          <p id="pm-pay-desc" style="margin-bottom: 18px">
+            Plan Premium Mensual · $5.000 / mes
+          </p>
+
+          <div
+            class="pay-method selected"
+            id="pmp-nequi"
+            onclick="selectPmPayMethod('nequi')"
+          >
+            <div class="pay-icon pay-icon-nequi">N</div>
+            <div class="pay-info">
+              <div class="pay-name">Nequi</div>
+              <div class="pay-sub">Paga con tu cuenta Nequi</div>
+            </div>
+            <div class="pay-check"></div>
           </div>
+          <div
+            class="pay-method"
+            id="pmp-davi"
+            onclick="selectPmPayMethod('davi')"
+          >
+            <div class="pay-icon pay-icon-davi">D+</div>
+            <div class="pay-info">
+              <div class="pay-name">Daviplata</div>
+              <div class="pay-sub">Paga con tu billetera Daviplata</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+          <div
+            class="pay-method"
+            id="pmp-pse"
+            onclick="selectPmPayMethod('pse')"
+          >
+            <div class="pay-icon pay-icon-pse">PSE</div>
+            <div class="pay-info">
+              <div class="pay-name">PSE</div>
+              <div class="pay-sub">Débito desde tu cuenta bancaria</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+          <div
+            class="pay-method"
+            id="pmp-card"
+            onclick="selectPmPayMethod('card')"
+          >
+            <div class="pay-icon pay-icon-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                width="22"
+                height="22"
+              >
+                <rect x="1" y="4" width="22" height="16" rx="2" />
+                <line x1="1" y1="10" x2="23" y2="10" />
+              </svg>
+            </div>
+            <div class="pay-info">
+              <div class="pay-name">Tarjeta Débito / Crédito</div>
+              <div class="pay-sub">Visa, Mastercard, Amex</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+          <div
+            class="pay-method"
+            id="pmp-transfer"
+            onclick="selectPmPayMethod('transfer')"
+          >
+            <div class="pay-icon pay-icon-transfer">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2"
+                width="22"
+                height="22"
+              >
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              </svg>
+            </div>
+            <div class="pay-info">
+              <div class="pay-name">Transferencia Bancaria</div>
+              <div class="pay-sub">Bancolombia, Davivienda y más</div>
+            </div>
+            <div class="pay-check"></div>
+          </div>
+
           <button
             class="btn btn-gold"
-            style="margin-top: 12px"
-            onclick="activatePremium()"
+            id="pm-pay-btn"
+            onclick="doPmPayment()"
+            style="margin-top: 14px"
           >
-            Activar Premium
+            Pagar y activar Premium
+          </button>
+          <button
+            class="btn btn-ghost"
+            style="margin-top: 8px"
+            onclick="closePremiumModal()"
+          >
+            Cancelar
           </button>
         </div>
-        <div class="card card-premium">
-          <h3 style="color: var(--gold-dk)">Premium Anual</h3>
-          <p style="font-size: var(--t-sm); color: var(--amber); margin: 8px 0">
-            Todo lo del mensual + 2 meses gratis.
-          </p>
+
+        <!-- STEP 3: Processing -->
+        <div
+          id="pm-step-processing"
+          style="display: none; text-align: center; padding: 30px 0"
+        >
           <div
+            class="spinner"
             style="
-              font-size: var(--t-lg);
-              font-weight: 800;
+              width: 48px;
+              height: 48px;
+              border-width: 4px;
+              border-color: rgba(201, 146, 42, 0.3);
+              border-top-color: var(--gold);
+              margin: 0 auto 20px;
+            "
+          ></div>
+          <h2 style="color: var(--gold-dk); margin-bottom: 8px">
+            Procesando pago...
+          </h2>
+          <p>No cierres esta ventana. Esto tomará unos segundos.</p>
+        </div>
+
+        <!-- STEP 4: Success -->
+        <div
+          id="pm-step-success"
+          style="display: none; text-align: center; padding: 10px 0"
+        >
+          <div
+            class="pay-success-icon"
+            style="background: var(--gold-lt); margin-bottom: 20px"
+          >
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12" /></svg>
+          </div>
+          <h2
+            style="
               color: var(--gold-dk);
+              font-family: var(--font-display);
+              font-size: var(--t-xl);
+              margin-bottom: 8px;
             "
           >
-            $50.000 / año
-          </div>
+            ¡Pago exitoso!
+          </h2>
+          <p
+            id="pm-success-label"
+            style="color: var(--sage); font-weight: 700; margin-bottom: 8px"
+          >
+            Premium Mensual activado ✓
+          </p>
+          <p style="color: var(--mist); margin-bottom: 24px">
+            Ya tienes acceso completo sin anuncios. Disfruta AseoYa Premium.
+          </p>
+          <button class="btn btn-gold" onclick="finishPremiumActivation()">
+            Empezar a disfrutar Premium
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ CANCEL CONFIRM MODAL ════════════════════ -->
+    <div class="modal-overlay" id="cancel-premium-modal">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <div style="text-align: center; margin-bottom: 20px">
           <div
             style="
-              font-size: var(--t-xs);
-              color: var(--sage);
-              font-weight: 700;
-              margin-bottom: 12px;
+              width: 64px;
+              height: 64px;
+              border-radius: 50%;
+              background: var(--red-lt);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 14px;
             "
           >
-            Ahorras $10.000
+            <svg
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="var(--red)"
+              stroke-width="2.5"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
+            </svg>
           </div>
-          <button class="btn btn-gold" onclick="activatePremium()">
-            Activar Anual
-          </button>
+          <h2 style="color: var(--ink); margin-bottom: 8px">
+            ¿Cancelar suscripción?
+          </h2>
+          <p style="color: var(--mist); margin-bottom: 0">
+            Si cancelas, perderás inmediatamente:
+          </p>
+        </div>
+        <div
+          style="
+            background: var(--red-lt);
+            border-radius: var(--r-sm);
+            padding: 16px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--red);
+          "
+        >
+          <div
+            style="font-size: var(--t-sm); color: var(--red); line-height: 2"
+          >
+            ✗ Regresarán los anuncios<br />
+            ✗ Perderás las alertas anticipadas<br />
+            ✗ No verás noticias exclusivas<br />
+            ✗ Tus reportes dejarán de ser prioritarios
+          </div>
         </div>
         <button
-          class="btn btn-ghost"
-          style="margin-top: 4px"
-          onclick="closePremiumModal()"
+          class="btn btn-danger"
+          style="margin-bottom: 10px"
+          onclick="confirmCancelPremium()"
         >
+          Sí, cancelar mi suscripción
+        </button>
+        <button class="btn btn-primary" onclick="closeCancelModal()">
+          No, conservar Premium
+        </button>
+      </div>
+    </div>
+
+    <!-- ════════════════════ EDIT ZONE MODAL ════════════════════ -->
+    <div class="modal-overlay" id="edit-zone-modal">
+      <div class="modal">
+        <div class="modal-handle"></div>
+        <h2 style="margin-bottom: 6px">Modificar mi zona</h2>
+        <p style="margin-bottom: 20px">
+          Actualiza tu ciudad y barrio para recibir información precisa de tu
+          sector.
+        </p>
+        <label
+          style="
+            font-size: var(--t-sm);
+            font-weight: 600;
+            color: var(--slate);
+            display: block;
+            margin-bottom: 6px;
+          "
+          >Ciudad</label
+        >
+        <input
+          type="text"
+          id="edit-city-input"
+          placeholder="Ej: Bogotá, Medellín, Cali..."
+          style="margin-bottom: 16px"
+        />
+        <label
+          style="
+            font-size: var(--t-sm);
+            font-weight: 600;
+            color: var(--slate);
+            display: block;
+            margin-bottom: 6px;
+          "
+          >Barrio o localidad</label
+        >
+        <input
+          type="text"
+          id="edit-zone-input"
+          placeholder="Ej: Barrio San Luis, Laureles..."
+        />
+        <button
+          class="btn btn-primary"
+          style="margin-top: 16px; margin-bottom: 10px"
+          onclick="saveEditZone()"
+        >
+          Guardar cambios
+        </button>
+        <button class="btn btn-ghost" onclick="closeEditZoneModal()">
           Cancelar
         </button>
       </div>
     </div>
 
-    <!-- ════════════════════ VOICE MODAL ════════════════════ -->
+    <!-- ════════════════════ ASISTENTE MODAL (Chat + Voz) ════════════════════ -->
     <div class="modal-overlay" id="voice-modal">
-      <div class="modal" style="text-align: center">
-        <div class="modal-handle"></div>
-        <h2 style="margin-bottom: 6px">Asistente de voz</h2>
-        <p id="voice-instruction">Toca el micrófono y pregúntame algo</p>
-        <p
-          style="
-            font-size: var(--t-xs);
-            color: var(--mist);
-            margin-bottom: 22px;
-          "
-        >
-          "¿A qué hora pasa el camión?" · "Quiero reportar un problema"
-        </p>
-        <button
-          class="voice-btn"
-          id="voice-btn-big"
-          onclick="toggleListening()"
-        >
-          <svg viewBox="0 0 24 24">
-            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
-            <path
-              d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"
-              fill="none"
-              stroke="#fff"
-              stroke-width="2.5"
-              stroke-linecap="round"
-            />
-          </svg>
-        </button>
-        <p
-          class="voice-status"
-          id="voice-status"
-          style="
-            text-align: center;
-            font-size: var(--t-sm);
-            color: var(--mist);
-            min-height: 22px;
-          "
-        >
-          Listo para escucharte
-        </p>
+      <div
+        class="modal"
+        style="
+          max-height: 88vh;
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+        "
+      >
+        <!-- Header -->
         <div
-          id="voice-result"
           style="
-            background: var(--pale);
-            border-radius: var(--r-sm);
-            padding: 14px;
-            margin: 14px 0;
-            display: none;
-            font-size: var(--t-sm);
-            color: var(--forest);
-            line-height: 1.55;
-            text-align: left;
-            border: 1px solid var(--border);
+            padding: 20px 24px 16px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
           "
-        ></div>
-        <button
-          class="btn btn-ghost"
-          style="margin-top: 4px"
-          onclick="closeVoice()"
         >
-          Cerrar
-        </button>
+          <div class="modal-handle" style="margin-bottom: 14px"></div>
+          <div style="display: flex; align-items: center; gap: 12px">
+            <div
+              style="
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+                background: var(--leaf);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+              "
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2.5"
+              >
+                <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                <path
+                  d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div>
+              <div
+                style="
+                  font-size: var(--t-base);
+                  font-weight: 700;
+                  color: var(--ink);
+                "
+              >
+                Hablar con AseoYa
+              </div>
+              <div
+                style="
+                  font-size: var(--t-xs);
+                  color: var(--sage);
+                  font-weight: 600;
+                "
+              >
+                ● En línea
+              </div>
+            </div>
+            <button
+              onclick="closeVoice()"
+              style="
+                margin-left: auto;
+                background: var(--pale);
+                border: none;
+                border-radius: 50%;
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                color: var(--mist);
+                font-size: 18px;
+                font-family: inherit;
+              "
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat messages -->
+        <div
+          id="chat-messages"
+          style="
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            -webkit-overflow-scrolling: touch;
+          "
+        >
+          <!-- Initial greeting injected by JS -->
+        </div>
+
+        <!-- Input area -->
+        <div
+          style="
+            padding: 12px 16px;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+            background: #fff;
+          "
+        >
+          <!-- Quick suggestion chips -->
+          <div
+            id="chat-chips"
+            style="
+              display: flex;
+              gap: 8px;
+              overflow-x: auto;
+              padding-bottom: 10px;
+              scrollbar-width: none;
+            "
+          >
+            <button
+              class="chat-chip"
+              onclick="sendChatMsg('¿A qué hora pasa el camión?')"
+            >
+              🚛 ¿Cuándo llega?
+            </button>
+            <button
+              class="chat-chip"
+              onclick="sendChatMsg('Quiero reportar un problema')"
+            >
+              ⚠️ Reportar
+            </button>
+            <button class="chat-chip" onclick="sendChatMsg('¿Qué es Premium?')">
+              ⭐ Premium
+            </button>
+            <button
+              class="chat-chip"
+              onclick="sendChatMsg('¿Cómo separo los residuos?')"
+            >
+              ♻️ Reciclaje
+            </button>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center">
+            <input
+              type="text"
+              id="chat-input"
+              placeholder="Escribe tu pregunta..."
+              style="
+                flex: 1;
+                padding: 13px 16px;
+                border: 1.5px solid var(--border);
+                border-radius: 24px;
+                font-size: var(--t-sm);
+                font-family: var(--font-body);
+                background: var(--pale);
+                color: var(--ink);
+                outline: none;
+              "
+              onkeydown="if (event.key === 'Enter') submitChat();"
+            />
+            <button
+              onclick="submitChat()"
+              style="
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                background: var(--leaf);
+                border: none;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                box-shadow: 0 2px 10px rgba(26, 102, 71, 0.35);
+              "
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#fff"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              >
+                <line x1="22" y1="2" x2="11" y2="13" />
+                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+              </svg>
+            </button>
+            <button
+              id="voice-btn-big"
+              onclick="toggleListening()"
+              style="
+                width: 46px;
+                height: 46px;
+                border-radius: 50%;
+                background: var(--pale);
+                border: 1.5px solid var(--border);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                transition: all 0.18s;
+              "
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="var(--slate)"
+                stroke-width="2"
+                stroke-linecap="round"
+              >
+                <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" />
+              </svg>
+            </button>
+          </div>
+          <p
+            id="voice-status"
+            style="
+              font-size: var(--t-xs);
+              color: var(--mist);
+              text-align: center;
+              margin-top: 6px;
+              min-height: 16px;
+            "
+          ></p>
+        </div>
       </div>
+    </div>
+
+    <!-- ════════════════════ AD OVERLAY (Free users) ════════════════════ -->
+    <!-- Small persistent banner at top -->
+    <div
+      id="ad-top-banner"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 430px;
+        background: linear-gradient(90deg, #f0c060, #e07a20);
+        padding: 8px 16px;
+        z-index: 250;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+        color: #7a5200;
+        cursor: pointer;
+      "
+      onclick="openFullAd()"
+    >
+      📢 <span id="top-banner-text">Publicidad — Toca para ver oferta</span>
+      <span
+        style="float: right; opacity: 0.6; font-size: 11px"
+        id="top-banner-timer"
+      ></span>
+    </div>
+
+    <!-- Full interruptive ad overlay -->
+    <div
+      id="ad-overlay"
+      style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 600;
+        background: rgba(10, 20, 15, 0.75);
+        align-items: flex-end;
+        justify-content: center;
+      "
+    >
+      <div
+        id="ad-sheet"
+        style="
+          background: #fff;
+          border-radius: 28px 28px 0 0;
+          width: 100%;
+          max-width: 430px;
+          padding: 28px 24px 36px;
+          max-height: 85vh;
+          overflow-y: auto;
+          animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+        "
+      >
+        <!-- Content injected dynamically by showFullAd() -->
+      </div>
+    </div>
+
+    <!-- ════════════════════ TUTORIAL OVERLAY ════════════════════ -->
+    <div id="tutorial-overlay">
+      <div class="tut-slides" id="tut-slides">
+        <!-- Slide 1: El camión -->
+        <div class="tut-slide active" id="tut-slide-0">
+          <div class="tut-visual">
+            <div class="tut-step-badge">Paso 1 de 4</div>
+            <div class="tut-emoji">🚛</div>
+            <div style="text-align: center; position: relative; z-index: 1">
+              <div
+                style="
+                  background: rgba(255, 255, 255, 0.12);
+                  border-radius: 20px;
+                  padding: 14px 20px;
+                  border: 1.5px solid rgba(255, 255, 255, 0.15);
+                  max-width: 280px;
+                "
+              >
+                <div
+                  style="
+                    font-size: var(--t-xs);
+                    color: rgba(255, 255, 255, 0.6);
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    margin-bottom: 4px;
+                  "
+                >
+                  El camión llega en
+                </div>
+                <div
+                  style="
+                    font-family: var(--font-display);
+                    font-size: 56px;
+                    color: #fff;
+                    line-height: 1;
+                  "
+                >
+                  40
+                </div>
+                <div
+                  style="
+                    font-size: var(--t-sm);
+                    color: rgba(255, 255, 255, 0.7);
+                  "
+                >
+                  minutos · Ruta 4
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tut-content">
+            <div class="tut-dots">
+              <div class="tut-dot active"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+            </div>
+            <div class="tut-num">Inicio</div>
+            <div class="tut-title">Ve cuándo llega el camión</div>
+            <div class="tut-desc">
+              En la pantalla de inicio verás en tiempo real cuántos minutos
+              faltan para que pase el camión por tu barrio. ¡Nunca más te lo
+              pierdas!
+            </div>
+            <div class="tut-actions">
+              <button class="tut-btn-skip" onclick="closeTutorial()">
+                Saltar
+              </button>
+              <button class="tut-btn-main" onclick="tutNext()">
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: Reportar -->
+        <div class="tut-slide" id="tut-slide-1">
+          <div class="tut-visual">
+            <div class="tut-step-badge">Paso 2 de 4</div>
+            <div class="tut-emoji">⚠️</div>
+            <div
+              style="
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                max-width: 280px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(192, 57, 43, 0.2);
+                  border: 1.5px solid rgba(192, 57, 43, 0.4);
+                  border-radius: 16px;
+                  padding: 14px 16px;
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                "
+              >
+                <div style="font-size: 24px">🚫</div>
+                <div style="color: #fff">
+                  <div style="font-weight: 700; font-size: var(--t-base)">
+                    No pasó el camión
+                  </div>
+                  <div
+                    style="
+                      font-size: var(--t-xs);
+                      opacity: 0.7;
+                      margin-top: 2px;
+                    "
+                  >
+                    Toca para reportar
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  background: rgba(224, 122, 32, 0.2);
+                  border: 1.5px solid rgba(224, 122, 32, 0.4);
+                  border-radius: 16px;
+                  padding: 14px 16px;
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                "
+              >
+                <div style="font-size: 24px">🗑️</div>
+                <div style="color: #fff">
+                  <div style="font-weight: 700; font-size: var(--t-base)">
+                    Basura acumulada
+                  </div>
+                  <div
+                    style="
+                      font-size: var(--t-xs);
+                      opacity: 0.7;
+                      margin-top: 2px;
+                    "
+                  >
+                    Toca para reportar
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tut-content">
+            <div class="tut-dots">
+              <div class="tut-dot"></div>
+              <div class="tut-dot active"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+            </div>
+            <div class="tut-num">Reportar</div>
+            <div class="tut-title">Reporta problemas con un toque</div>
+            <div class="tut-desc">
+              Si el camión no pasó o hay basura acumulada, ve a la sección
+              <strong>Reportar</strong> y toca el botón que describe el
+              problema. ¡Así simple!
+            </div>
+            <div class="tut-actions">
+              <button class="tut-btn-skip" onclick="closeTutorial()">
+                Saltar
+              </button>
+              <button class="tut-btn-main" onclick="tutNext()">
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Alertas -->
+        <div class="tut-slide" id="tut-slide-2">
+          <div class="tut-visual">
+            <div class="tut-step-badge">Paso 3 de 4</div>
+            <div class="tut-emoji">🔔</div>
+            <div
+              style="
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                max-width: 290px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(200, 240, 220, 0.15);
+                  border: 1.5px solid rgba(200, 240, 220, 0.25);
+                  border-radius: 16px;
+                  padding: 12px 16px;
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                "
+              >
+                <div
+                  style="
+                    width: 36px;
+                    height: 36px;
+                    background: var(--mint);
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    font-size: 18px;
+                  "
+                >
+                  🟢
+                </div>
+                <div style="color: #fff">
+                  <div style="font-weight: 700; font-size: var(--t-sm)">
+                    El camión está cerca
+                  </div>
+                  <div style="font-size: var(--t-xs); opacity: 0.7">
+                    Saca la basura ahora
+                  </div>
+                </div>
+              </div>
+              <div
+                style="
+                  background: rgba(200, 240, 220, 0.08);
+                  border: 1.5px solid rgba(200, 240, 220, 0.15);
+                  border-radius: 16px;
+                  padding: 12px 16px;
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                "
+              >
+                <div
+                  style="
+                    width: 36px;
+                    height: 36px;
+                    background: rgba(224, 122, 32, 0.3);
+                    border-radius: 10px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                    font-size: 18px;
+                  "
+                >
+                  ⏰
+                </div>
+                <div style="color: #fff">
+                  <div style="font-weight: 700; font-size: var(--t-sm)">
+                    Recordatorio
+                  </div>
+                  <div style="font-size: var(--t-xs); opacity: 0.7">
+                    Mañana pasa a las 7 AM
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tut-content">
+            <div class="tut-dots">
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot active"></div>
+              <div class="tut-dot"></div>
+            </div>
+            <div class="tut-num">Alertas</div>
+            <div class="tut-title">Recibe avisos automáticos</div>
+            <div class="tut-desc">
+              En la sección <strong>Alertas</strong> verás todos los avisos:
+              cuándo llega el camión, cambios de horario y recordatorios la
+              noche anterior.
+            </div>
+            <div class="tut-actions">
+              <button class="tut-btn-skip" onclick="closeTutorial()">
+                Saltar
+              </button>
+              <button class="tut-btn-main" onclick="tutNext()">
+                Siguiente →
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4: Chat -->
+        <div class="tut-slide" id="tut-slide-3">
+          <div class="tut-visual">
+            <div class="tut-step-badge">Paso 4 de 4</div>
+            <div class="tut-emoji">💬</div>
+            <div
+              style="
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                max-width: 280px;
+              "
+            >
+              <div
+                style="
+                  background: rgba(255, 255, 255, 0.1);
+                  border-radius: 18px 18px 18px 4px;
+                  padding: 12px 16px;
+                  border: 1px solid rgba(255, 255, 255, 0.12);
+                "
+              >
+                <div style="font-size: var(--t-sm); color: #fff">
+                  ¿A qué hora pasa el camión hoy?
+                </div>
+              </div>
+              <div
+                style="
+                  background: var(--sage);
+                  border-radius: 18px 18px 4px 18px;
+                  padding: 12px 16px;
+                  align-self: flex-end;
+                  max-width: 220px;
+                "
+              >
+                <div style="font-size: var(--t-sm); color: #fff">
+                  El camión llegará en <strong>40 minutos</strong> a tu barrio.
+                  ¡Ten lista la basura! 🚛
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tut-content">
+            <div class="tut-dots">
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot"></div>
+              <div class="tut-dot active"></div>
+            </div>
+            <div class="tut-num">Chat</div>
+            <div class="tut-title">Habla con el asistente</div>
+            <div class="tut-desc">
+              En la sección inicio, toca <strong>"Hablar con AseoYa"</strong>.
+              Puedes escribir o hablar por voz para preguntar horarios,
+              reciclaje o reportar problemas. ¡Como hablar con una persona!
+            </div>
+            <div class="tut-actions">
+              <button
+                class="tut-btn-main"
+                style="background: linear-gradient(135deg, #1a6647, #2d9e6b)"
+                onclick="closeTutorial()"
+              >
+                ¡Listo, empezar! 🎉
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════ ECO TIP BANNER ════════════════════ -->
+    <div id="eco-tip-banner">
+      <div class="eco-tip-icon" id="eco-tip-icon">🌱</div>
+      <div class="eco-tip-body">
+        <div class="eco-tip-title">Consejo ecológico</div>
+        <div class="eco-tip-text" id="eco-tip-text">
+          Separa tus residuos en bolsas de colores: azul para reciclables, verde
+          para orgánicos.
+        </div>
+      </div>
+      <button class="eco-tip-close" onclick="hideEcoTip()">✕</button>
     </div>
 
     <script>
@@ -2982,26 +5093,81 @@
             });
         });
       }
+      /* ═══════════════════════════════════════
+   PERSISTENCIA (localStorage)
+═══════════════════════════════════════ */
+      var DEFAULT_ACCOUNTS = [
+        {
+          email: "demo@aseoya.co",
+          pass: "123456",
+          name: "Carlos Rodríguez",
+          zone: "Barrio San Luis",
+          city: "Bogotá",
+          premium: false,
+        },
+      ];
+
+      function loadAccounts() {
+        try {
+          var raw = localStorage.getItem("aseoya_accounts");
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+          }
+        } catch (e) {}
+        return DEFAULT_ACCOUNTS.slice();
+      }
+
+      function saveAccounts(accounts) {
+        try {
+          localStorage.setItem("aseoya_accounts", JSON.stringify(accounts));
+        } catch (e) {}
+      }
+
+      function loadSession() {
+        try {
+          var raw = localStorage.getItem("aseoya_session");
+          if (raw) return JSON.parse(raw);
+        } catch (e) {}
+        return null;
+      }
+
+      function saveSession(s) {
+        try {
+          localStorage.setItem("aseoya_session", JSON.stringify(s));
+        } catch (e) {}
+      }
+
+      function clearSession() {
+        try {
+          localStorage.removeItem("aseoya_session");
+        } catch (e) {}
+      }
+
+      /* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
       var state = {
         userName: "",
-        userZone: "Barrio San Luis",
+        userCity: "",
+        userZone: "",
         isPremium: false,
-        voiceAutoRead: true,
+        voiceAutoRead: false,
         etaVal: 8,
         listening: false,
         userMode: "normal",
         isLoggedIn: false,
-        // Fake "accounts" storage (in-memory only)
-        accounts: [
-          {
-            email: "demo@aseoya.co",
-            pass: "123456",
-            name: "Carlos Rodríguez",
-            zone: "Barrio San Luis",
-            premium: false,
-          },
-        ],
+        fromRegister: false,
+        accLevel: "beginner",
+        fontSetup: "normal",
+        pendingTutorial: false,
+        accounts: loadAccounts(),
       };
+
+      var selectedHasDifficulty = false;
+      var selectedVoiceSetup = false;
+      var selectedFontSetup = "normal";
+      var selectedWantsTutorial = false;
 
       var selectedPlan = "free";
       var selectedPayMethod = "nequi";
@@ -3013,6 +5179,17 @@
       function openAuthModal(mode) {
         document.getElementById("auth-modal").classList.add("open");
         switchStep(mode);
+      }
+      function closeAuthModal() {
+        if (!state.isLoggedIn) {
+          document.getElementById("auth-modal").classList.remove("open");
+        }
+      }
+      function closeSplash() {
+        // Just close the auth modal if open
+        document.getElementById("auth-modal").classList.remove("open");
+        // Show a friendly message
+        toast("Puedes volver cuando quieras ✓");
       }
 
       function switchStep(step) {
@@ -3059,8 +5236,10 @@
           // Success
           state.userName = found.name;
           state.userZone = found.zone;
+          state.userCity = found.city || "";
           state.isPremium = found.premium;
           state.isLoggedIn = true;
+          saveSession({ email: found.email });
           finishAuth();
         }, 1200);
       }
@@ -3069,12 +5248,16 @@
         var name = document.getElementById("reg-name").value.trim();
         var email = document.getElementById("reg-email").value.trim();
         var pass = document.getElementById("reg-pass").value;
+        var city = document.getElementById("reg-city")
+          ? document.getElementById("reg-city").value.trim()
+          : "";
         var zone = document.getElementById("reg-zone").value.trim();
         var errEl = document.getElementById("reg-error");
         errEl.style.display = "none";
 
-        if (!name || !email || !pass || !zone) {
-          errEl.textContent = "Por favor completa todos los campos.";
+        if (!name || !email || !pass || !zone || !city) {
+          errEl.textContent =
+            "Por favor completa todos los campos, incluyendo la ciudad.";
           errEl.style.display = "block";
           return;
         }
@@ -3097,19 +5280,104 @@
           btn.innerHTML = "Crear cuenta gratis";
           btn.disabled = false;
           state.userName = name;
+          state.userCity = city || "Bogotá";
           state.userZone = zone;
           state.isLoggedIn = true;
-          // Save account
+          state.fromRegister = true;
           state.accounts.push({
             email: email,
             pass: pass,
             name: name,
             zone: zone,
+            city: city || "",
             premium: false,
           });
-          // Go to plan selection
-          switchStep("plan");
+          saveAccounts(state.accounts);
+          // Go to accessibility step first
+          switchStep("accessibility");
         }, 1200);
+      }
+
+      /* ═══════════════════════════════════════
+   NEW ACCESSIBILITY FLOW
+═══════════════════════════════════════ */
+      function selectDifficulty(hasDiff) {
+        selectedHasDifficulty = hasDiff;
+        document
+          .getElementById("acc-diff-yes")
+          .classList.toggle("selected", hasDiff);
+        document
+          .getElementById("acc-diff-no")
+          .classList.toggle("selected", !hasDiff);
+      }
+
+      function continueAccessibility() {
+        if (selectedHasDifficulty) {
+          // Show font size step first, then voice step
+          switchStep("font-setup");
+        } else {
+          // No difficulty: apply normal settings and skip to tutorial question
+          selectedFontSetup = "normal";
+          selectedVoiceSetup = false;
+          applyMode("normal");
+          state.voiceAutoRead = false;
+          var togEl = document.getElementById("voice-toggle");
+          if (togEl) togEl.classList.toggle("on", false);
+          switchStep("tutorial-ask");
+        }
+      }
+
+      function selectFontSetup(size) {
+        selectedFontSetup = size;
+        document
+          .getElementById("fc-normal")
+          .classList.toggle("selected", size === "normal");
+        document
+          .getElementById("fc-large")
+          .classList.toggle("selected", size === "large");
+      }
+
+      function continueFontSetup() {
+        // Apply chosen font
+        if (selectedFontSetup === "large") {
+          applyMode("senior");
+        } else {
+          applyMode("normal");
+        }
+        state.fontSetup = selectedFontSetup;
+        // Go to voice setup (only reached if user has difficulty)
+        switchStep("voice-setup");
+      }
+
+      function selectVoiceSetup(wantsVoice) {
+        selectedVoiceSetup = wantsVoice;
+        document
+          .getElementById("vc-yes")
+          .classList.toggle("selected", wantsVoice);
+        document
+          .getElementById("vc-no")
+          .classList.toggle("selected", !wantsVoice);
+      }
+
+      function continueVoiceSetup() {
+        state.voiceAutoRead = selectedVoiceSetup;
+        var togEl = document.getElementById("voice-toggle");
+        if (togEl) togEl.classList.toggle("on", state.voiceAutoRead);
+        switchStep("tutorial-ask");
+      }
+
+      function selectTutorial(wants) {
+        selectedWantsTutorial = wants;
+        document.getElementById("tut-yes").classList.toggle("selected", wants);
+        document.getElementById("tut-no").classList.toggle("selected", !wants);
+      }
+
+      function continueTutorialAsk() {
+        switchStep("plan"); // go to plan selection after tutorial choice
+        if (selectedWantsTutorial) {
+          // Show tutorial AFTER plan/payment is done — store the flag
+          state.pendingTutorial = true;
+        }
       }
 
       function selectPlan(plan) {
@@ -3169,6 +5437,13 @@
       }
 
       function finishAuth() {
+        // Save session so it persists on reload
+        var acc = state.accounts.find(function (a) {
+          return a.name === state.userName;
+        });
+        if (acc) {
+          saveSession({ email: acc.email });
+        }
         // Hide auth
         document.getElementById("auth-modal").classList.remove("open");
         document.getElementById("auth-splash").style.display = "none";
@@ -3178,20 +5453,38 @@
         updateUI();
         goTo("home");
         toast("¡Bienvenido, " + state.userName.split(" ")[0] + "!");
-        if (state.voiceAutoRead)
-          speak(
-            "Bienvenido a AseoYa, " +
-              state.userName.split(" ")[0] +
-              ". Tu barrio está registrado como " +
-              state.userZone +
-              ".",
-          );
+        // Only speak if user explicitly enabled voice assistant
+        if (state.voiceAutoRead && state.isLoggedIn) {
+          setTimeout(function () {
+            speak(
+              "Bienvenido a AseoYa, " +
+                state.userName.split(" ")[0] +
+                ". Tu barrio está registrado como " +
+                state.userZone +
+                ".",
+            );
+          }, 600);
+        }
+        // Show tutorial if user requested it during onboarding
+        if (state.pendingTutorial) {
+          state.pendingTutorial = false;
+          setTimeout(function () {
+            openTutorial();
+          }, 800);
+        }
+        // Start ads for free users after a delay
+        if (!state.isPremium) {
+          setTimeout(startAdCycle, 8000);
+        }
       }
 
       function logOut() {
         state.isLoggedIn = false;
         state.isPremium = false;
         state.userName = "";
+        state.userCity = "";
+        state.userZone = "";
+        clearSession();
         // Hide app
         document.getElementById("status-bar").style.display = "none";
         document.getElementById("main-nav").style.display = "none";
@@ -3241,14 +5534,18 @@
           .slice(0, 2)
           .toUpperCase();
         document.getElementById("user-name-lbl").textContent = firstName;
-        document.getElementById("hdr-zone").textContent =
-          state.userZone + " · Chapinero";
+        var zoneLabel =
+          state.userZone && state.userCity
+            ? state.userZone + " · " + state.userCity
+            : state.userZone || state.userCity || "";
+        document.getElementById("hdr-zone").textContent = zoneLabel;
         document.getElementById("profile-name").textContent = state.userName;
-        document.getElementById("profile-zone").textContent =
-          state.userZone + " · Chapinero";
+        document.getElementById("profile-zone").textContent = zoneLabel;
         document.getElementById("avatar").textContent = initials;
         document.getElementById("zone-lbl").textContent = state.userZone;
         document.getElementById("zone-display").textContent = state.userZone;
+        var cityDisp = document.getElementById("zone-city-display");
+        if (cityDisp) cityDisp.textContent = state.userCity;
         document.getElementById("premium-badge").style.display = state.isPremium
           ? "inline-flex"
           : "none";
@@ -3274,6 +5571,7 @@
         document.getElementById("notif-wall").style.display = state.isPremium
           ? "none"
           : "block";
+        if (typeof updateReportCountUI === "function") updateReportCountUI();
       }
 
       /* ═══════════════════════════════════════
@@ -3309,20 +5607,67 @@
       updateClock();
 
       /* ═══════════════════════════════════════
-   ETA
+   ETA — realistic times, alerts only when logged in
 ═══════════════════════════════════════ */
-      setInterval(function () {
-        state.etaVal = Math.max(1, state.etaVal - 1);
+      var ETA_SEQUENCE = [
+        120, 95, 75, 60, 50, 40, 35, 28, 22, 18, 15, 12, 10, 8, 6, 5, 4, 3, 2,
+        1,
+      ];
+      var etaSeqIndex = 0;
+      (function () {
+        for (var i = 0; i < ETA_SEQUENCE.length; i++) {
+          if (ETA_SEQUENCE[i] <= state.etaVal) {
+            etaSeqIndex = i;
+            break;
+          }
+        }
+      })();
+
+      function updateEtaDisplay() {
         var el = document.getElementById("eta-display");
-        if (el) el.textContent = state.etaVal;
-        if (state.etaVal === 5) {
+        var unitEl = document.querySelector(".eta-unit");
+        if (!el) return;
+        var val = state.etaVal;
+        if (val >= 60) {
+          var hrs = Math.floor(val / 60);
+          var mins = val % 60;
+          el.textContent =
+            hrs + (mins > 0 ? ":" + (mins < 10 ? "0" : "") + mins : "");
+          if (unitEl)
+            unitEl.textContent =
+              hrs === 1
+                ? "hora" + (mins > 0 ? " " + mins + " min" : "")
+                : "horas";
+        } else {
+          el.textContent = val;
+          if (unitEl) unitEl.textContent = "minutos";
+        }
+      }
+
+      setInterval(function () {
+        if (etaSeqIndex < ETA_SEQUENCE.length - 1) {
+          etaSeqIndex++;
+          state.etaVal = ETA_SEQUENCE[etaSeqIndex];
+        } else {
+          state.etaVal = Math.max(1, state.etaVal - 1);
+        }
+        updateEtaDisplay();
+        if (state.isLoggedIn && state.etaVal === 15) {
+          toast("El camión está a 15 minutos. Prepara tu basura.");
+          if (state.voiceAutoRead)
+            speak(
+              "El camión llegará en 15 minutos a tu sector. Prepara tu basura.",
+            );
+        }
+        if (state.isLoggedIn && state.etaVal === 5) {
           toast("El camión está a 5 minutos. ¡Saca la basura!");
-          if (state.voiceAutoRead && state.isLoggedIn)
+          if (state.voiceAutoRead)
             speak(
               "Atención. El camión está a 5 minutos de tu sector. Saca la basura ahora.",
             );
         }
-      }, 12000);
+      }, 18000);
+      setTimeout(updateEtaDisplay, 200);
 
       /* ═══════════════════════════════════════
    COUNTDOWN
@@ -3356,23 +5701,69 @@
         window.speechSynthesis.speak(u);
       }
 
+      function speakETA() {
+        var eta = state.etaVal;
+        var msg;
+        if (eta <= 1) {
+          msg =
+            "El camión está llegando ahora mismo a tu sector. ¡Saca la basura de inmediato!";
+        } else if (eta <= 5) {
+          msg =
+            "El camión está a " +
+            eta +
+            " minutos de tu sector. ¡Saca la basura ahora!";
+        } else if (eta >= 60) {
+          var hrs = Math.floor(eta / 60);
+          var mins = eta % 60;
+          msg =
+            "El camión llegará en aproximadamente " +
+            hrs +
+            " hora" +
+            (hrs > 1 ? "s" : "") +
+            (mins > 0 ? " y " + mins + " minutos" : "") +
+            ". Todavía tienes tiempo.";
+        } else {
+          msg =
+            "El camión de aseo llegará en aproximadamente " +
+            eta +
+            " minutos a tu sector. Prepara tu basura.";
+        }
+        speak(msg);
+      }
+
       /* ═══════════════════════════════════════
-   VOICE RECOGNITION
+   CHAT ASSISTANT
 ═══════════════════════════════════════ */
       var recognition = null;
+      var chatHistory = [];
+
       function openVoice() {
         document.getElementById("voice-modal").classList.add("open");
-        document.getElementById("voice-result").style.display = "none";
-        document.getElementById("voice-status").textContent =
-          "Listo para escucharte";
-        document.getElementById("voice-instruction").textContent =
-          "Toca el micrófono y pregúntame algo";
+        var msgs = document.getElementById("chat-messages");
+        if (msgs.children.length === 0) {
+          // Initial greeting
+          setTimeout(function () {
+            addBotMessage(
+              "¡Hola, " +
+                (state.userName.split(" ")[0] || "") +
+                "! Soy el asistente de AseoYa. Puedes preguntarme sobre horarios, el camión, reciclaje, reportes o tu cuenta. ¿En qué te ayudo hoy?",
+            );
+          }, 300);
+        }
+        setTimeout(function () {
+          scrollChat();
+        }, 400);
       }
+
       function openVoiceReport() {
         openVoice();
-        document.getElementById("voice-instruction").textContent =
-          "Dime qué problema ocurrió y lo reportamos automáticamente";
+        setTimeout(function () {
+          addBotMessage(
+            'Para reportar un problema, dime: ¿qué ocurrió? Por ejemplo: "No pasó el camión hoy" o "Hay basura acumulada en la calle".',
+          );
+        }, 500);
       }
+
       function closeVoice() {
         document.getElementById("voice-modal").classList.remove("open");
         if (recognition) {
@@ -3381,120 +5772,368 @@
           } catch (e) {}
         }
         state.listening = false;
-        document.getElementById("voice-btn-big").classList.remove("listening");
+        var vBtn = document.getElementById("voice-btn-big");
+        if (vBtn) vBtn.classList.remove("listening");
       }
+
+      function scrollChat() {
+        var msgs = document.getElementById("chat-messages");
+        if (msgs) msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function addBotMessage(text) {
+        var msgs = document.getElementById("chat-messages");
+        var row = document.createElement("div");
+        row.className = "chat-row chat-row-bot";
+        row.innerHTML =
+          '<div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" stroke-linecap="round"/></svg></div><div class="chat-bubble chat-bubble-bot">' +
+          text +
+          "</div>";
+        msgs.appendChild(row);
+        scrollChat();
+        if (state.voiceAutoRead) speak(text.replace(/<[^>]*>/g, ""));
+      }
+
+      function addUserMessage(text) {
+        var msgs = document.getElementById("chat-messages");
+        var row = document.createElement("div");
+        row.className = "chat-row chat-row-user";
+        row.innerHTML =
+          '<div class="chat-bubble chat-bubble-user">' + text + "</div>";
+        msgs.appendChild(row);
+        scrollChat();
+      }
+
+      function showTyping() {
+        var msgs = document.getElementById("chat-messages");
+        var typing = document.createElement("div");
+        typing.className = "chat-row chat-row-bot";
+        typing.id = "chat-typing";
+        typing.innerHTML =
+          '<div class="chat-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" stroke-linecap="round"/></svg></div><div class="chat-bubble chat-bubble-bot chat-typing"><span></span><span></span><span></span></div>';
+        msgs.appendChild(typing);
+        scrollChat();
+      }
+
+      function removeTyping() {
+        var t = document.getElementById("chat-typing");
+        if (t) t.remove();
+      }
+
+      function sendChatMsg(text) {
+        document.getElementById("chat-input").value = "";
+        addUserMessage(text);
+        showTyping();
+        setTimeout(
+          function () {
+            removeTyping();
+            var ans = buildChatAnswer(text);
+            addBotMessage(ans);
+          },
+          900 + Math.random() * 600,
+        );
+      }
+
+      function submitChat() {
+        var input = document.getElementById("chat-input");
+        var text = input.value.trim();
+        if (!text) return;
+        input.value = "";
+        addUserMessage(text);
+        showTyping();
+        setTimeout(
+          function () {
+            removeTyping();
+            var ans = buildChatAnswer(text);
+            addBotMessage(ans);
+          },
+          900 + Math.random() * 600,
+        );
+      }
+
+      function buildChatAnswer(q) {
+        var ql = q.toLowerCase();
+        var zona = state.userZone || "tu barrio";
+        var eta = state.etaVal;
+
+        if (
+          ql.includes("camión") ||
+          ql.includes("hora") ||
+          ql.includes("llega") ||
+          ql.includes("pasa") ||
+          ql.includes("cuándo") ||
+          ql.includes("cuando") ||
+          ql.includes("horario")
+        ) {
+          return (
+            "El camión de aseo está en ruta y llegará a <strong>" +
+            zona +
+            "</strong> en aproximadamente <strong>" +
+            eta +
+            " minutos</strong>. El horario de hoy es de 7:00 a 9:00 AM. ¡Ten tu basura lista!"
+          );
+        }
+        if (
+          ql.includes("retraso") ||
+          ql.includes("tarda") ||
+          ql.includes("demora") ||
+          ql.includes("tarde")
+        ) {
+          return "Hay un posible retraso de 10 a 15 minutos hoy por las condiciones climáticas. El camión sigue en ruta pero puede llegar un poco más tarde de lo habitual.";
+        }
+        if (
+          ql.includes("report") ||
+          ql.includes("problem") ||
+          ql.includes("no pasó") ||
+          ql.includes("no paso") ||
+          ql.includes("basura acumulada")
+        ) {
+          setTimeout(function () {
+            closeVoice();
+            goTo("report");
+          }, 2000);
+          return "Entendido. Te llevaré a la sección de reportes para que puedas registrar el problema. Tus reportes ayudan a mejorar el servicio en tu zona. 👉";
+        }
+        if (
+          ql.includes("recicl") ||
+          ql.includes("separa") ||
+          ql.includes("bolsa") ||
+          ql.includes("residuo")
+        ) {
+          return "Para reciclar correctamente: usa <strong>bolsas azules o blancas</strong> para cartón, plástico y vidrio. Las bolsas <strong>negras o verdes</strong> son para residuos ordinarios. El día de reciclaje es el jueves de 6:30 a 8:30 AM.";
+        }
+        if (
+          ql.includes("premium") ||
+          ql.includes("suscripción") ||
+          ql.includes("pagar") ||
+          ql.includes("plan") ||
+          ql.includes("beneficio")
+        ) {
+          if (state.isPremium) {
+            return "¡Ya tienes cuenta Premium activa! ⭐ Disfrutas de cero anuncios, alertas anticipadas 30 minutos antes que otros usuarios, noticias exclusivas del barrio y reportes prioritarios.";
+          }
+          return "El plan <strong>Premium cuesta $5.000 al mes</strong> e incluye: sin publicidad, alertas 30 minutos antes, noticias exclusivas y reportes prioritarios. ¿Quieres activarlo?";
+        }
+        if (
+          ql.includes("activar") ||
+          ql.includes("comprar premium") ||
+          ql.includes("quiero premium")
+        ) {
+          setTimeout(function () {
+            closeVoice();
+            openPremiumModal();
+          }, 1500);
+          return "Con gusto te ayudo a activar Premium. Te abriré la pantalla de pago ahora mismo. ⭐";
+        }
+        if (
+          ql.includes("cancel") ||
+          ql.includes("baja") ||
+          ql.includes("eliminar cuenta")
+        ) {
+          return "Para cancelar tu suscripción, ve a <strong>Perfil → Cancelar suscripción</strong>. Recuerda que perderías los beneficios Premium inmediatamente.";
+        }
+        if (
+          ql.includes("zona") ||
+          ql.includes("barrio") ||
+          ql.includes("ciudad") ||
+          ql.includes("dirección") ||
+          ql.includes("ubicacion") ||
+          ql.includes("ubicación")
+        ) {
+          return (
+            "Tu zona registrada es <strong>" +
+            zona +
+            "</strong>" +
+            (state.userCity
+              ? ", <strong>" + state.userCity + "</strong>"
+              : "") +
+            ". ¿Necesitas cambiarla? Ve a Perfil → Mi zona → Modificar mi zona."
+          );
+        }
+        if (
+          ql.includes("hola") ||
+          ql.includes("buenos") ||
+          ql.includes("buenas") ||
+          ql.includes("saludos")
+        ) {
+          return "¡Hola! 😊 Soy el asistente de AseoYa. Puedo ayudarte con horarios del camión, reciclaje, reportes de problemas y tu cuenta. ¿Qué necesitas?";
+        }
+        if (
+          ql.includes("gracias") ||
+          ql.includes("listo") ||
+          ql.includes("ok") ||
+          ql.includes("perfecto")
+        ) {
+          return "¡Con mucho gusto! Estoy aquí si necesitas algo más. 👍";
+        }
+        return (
+          'Entendí tu pregunta sobre "<em>' +
+          q +
+          '</em>". Puedo ayudarte con: horarios del camión 🚛, reciclaje ♻️, reportar problemas ⚠️, o tu cuenta Premium ⭐. ¿Sobre cuál de estos quieres saber más?'
+        );
+      }
+
+      /* ═══════════════════════════════════════
+   VOICE RECOGNITION — mic writes to chat input in Spanish
+═══════════════════════════════════════ */
       function toggleListening() {
         if (!state.listening) startListening();
         else stopListening();
       }
       function startListening() {
+        var statusEl = document.getElementById("voice-status");
+        var vBtn = document.getElementById("voice-btn-big");
+        var inputEl = document.getElementById("chat-input");
         var SpeechRecog =
           window.SpeechRecognition || window.webkitSpeechRecognition;
+
         if (!SpeechRecog) {
-          state.listening = true;
-          document.getElementById("voice-btn-big").classList.add("listening");
-          document.getElementById("voice-status").textContent = "Escuchando...";
+          if (statusEl)
+            statusEl.textContent =
+              "⚠️ Tu navegador no soporta reconocimiento de voz. Escribe tu mensaje.";
           setTimeout(function () {
-            stopListening();
-            showVoiceAnswer(
-              "¿A qué hora pasa el camión?",
-              "El camión pasa hoy martes entre las 7 y las 9 de la mañana. Ya está en camino y llegará en aproximadamente 8 minutos a tu sector.",
-            );
-          }, 2500);
+            if (statusEl) statusEl.textContent = "";
+          }, 3000);
           return;
         }
+
+        if (recognition) {
+          try {
+            recognition.abort();
+          } catch (e) {}
+        }
+
         recognition = new SpeechRecog();
         recognition.lang = "es-CO";
         recognition.continuous = false;
-        recognition.interimResults = false;
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
+
         state.listening = true;
-        document.getElementById("voice-btn-big").classList.add("listening");
-        document.getElementById("voice-status").textContent =
-          "Escuchando... habla ahora";
+        if (vBtn) {
+          vBtn.classList.add("listening");
+          vBtn.querySelector("svg").setAttribute("stroke", "var(--sage)");
+        }
+        if (statusEl) statusEl.textContent = "🎙 Escuchando... habla ahora";
+        if (inputEl) {
+          inputEl.placeholder = "🎙 Escuchando...";
+        }
+
         recognition.onresult = function (e) {
-          var q = e.results[0][0].transcript;
-          stopListening();
-          processVoiceQuery(q);
+          var transcript = "";
+          for (var i = e.resultIndex; i < e.results.length; i++) {
+            transcript += e.results[i][0].transcript;
+          }
+          // Write transcript into the chat input field live
+          if (inputEl) inputEl.value = transcript;
+          if (statusEl)
+            statusEl.textContent = e.results[e.results.length - 1].isFinal
+              ? "✅ Listo — pulsa enviar"
+              : "🎙 " + transcript;
+          if (e.results[e.results.length - 1].isFinal) {
+            stopListening();
+            // Auto-send after brief pause
+            setTimeout(function () {
+              if (inputEl && inputEl.value.trim()) submitChat();
+            }, 700);
+          }
         };
-        recognition.onerror = function () {
+
+        recognition.onerror = function (e) {
           stopListening();
-          document.getElementById("voice-status").textContent =
-            "No te escuché bien. Intenta de nuevo.";
+          var msg = "⚠️ No te escuché bien. Intenta de nuevo.";
+          if (e.error === "not-allowed")
+            msg = "⚠️ Permiso de micrófono denegado. Actívalo en tu navegador.";
+          if (e.error === "no-speech")
+            msg = "⚠️ No detecté voz. Habla más cerca del micrófono.";
+          if (statusEl) statusEl.textContent = msg;
+          setTimeout(function () {
+            if (statusEl) statusEl.textContent = "";
+          }, 4000);
         };
+
         recognition.onend = function () {
           state.listening = false;
+          if (vBtn) {
+            vBtn.classList.remove("listening");
+            vBtn.querySelector("svg").setAttribute("stroke", "var(--slate)");
+          }
+          if (inputEl) inputEl.placeholder = "Escribe tu pregunta...";
         };
-        recognition.start();
+
+        try {
+          recognition.start();
+        } catch (e) {
+          stopListening();
+          if (statusEl)
+            statusEl.textContent =
+              "⚠️ Error al iniciar el micrófono. Intenta de nuevo.";
+        }
       }
       function stopListening() {
         state.listening = false;
-        document.getElementById("voice-btn-big").classList.remove("listening");
-        document.getElementById("voice-status").textContent = "Procesando...";
+        var vBtn = document.getElementById("voice-btn-big");
+        if (vBtn) {
+          vBtn.classList.remove("listening");
+          var svg = vBtn.querySelector("svg");
+          if (svg) svg.setAttribute("stroke", "var(--slate)");
+        }
+        var statusEl = document.getElementById("voice-status");
+        var inputEl = document.getElementById("chat-input");
+        if (inputEl) inputEl.placeholder = "Escribe tu pregunta...";
         if (recognition) {
           try {
             recognition.stop();
           } catch (e) {}
         }
       }
-      function processVoiceQuery(q) {
-        var ql = q.toLowerCase(),
-          ans;
-        if (
-          ql.includes("camión") ||
-          ql.includes("hora") ||
-          ql.includes("pasa") ||
-          ql.includes("horario")
-        )
-          ans =
-            "El camión de aseo pasa hoy martes entre las 7 y las 9 de la mañana. Ya está cerca, llegará en unos 8 minutos.";
-        else if (
-          ql.includes("retraso") ||
-          ql.includes("tarda") ||
-          ql.includes("demora")
-        )
-          ans =
-            "Hay un posible retraso de 10 a 15 minutos por la lluvia de esta mañana.";
-        else if (
-          ql.includes("report") ||
-          ql.includes("problem") ||
-          ql.includes("basura")
-        ) {
-          ans =
-            "Te llevaré a la pantalla de reportes para que puedas informar el problema.";
-          setTimeout(function () {
-            closeVoice();
-            goTo("report");
-          }, 2500);
-        } else if (ql.includes("premium") || ql.includes("beneficio"))
-          ans =
-            "El plan Premium cuesta 5 mil pesos al mes y te da noticias exclusivas, alertas anticipadas y más beneficios.";
-        else
-          ans =
-            'Entendí: "' +
-            q +
-            '". Puedo ayudarte con horarios, reportes, alertas y la cuenta Premium. ¿Qué necesitas saber?';
-        showVoiceAnswer(q, ans);
-      }
-      function showVoiceAnswer(q, ans) {
-        var r = document.getElementById("voice-result");
-        r.innerHTML =
-          "<strong>Preguntaste:</strong> " +
-          q +
-          "<br><br><strong>Respuesta:</strong> " +
-          ans;
-        r.style.display = "block";
-        document.getElementById("voice-status").textContent = "Respondiendo...";
-        speak(ans);
-      }
 
       /* ═══════════════════════════════════════
-   REPORTS
+   REPORTS — counter persists in localStorage
 ═══════════════════════════════════════ */
+      function loadReportCount() {
+        try {
+          var raw = localStorage.getItem(
+            "aseoya_report_count_" + (state.userZone || "default"),
+          );
+          if (raw) return parseInt(raw, 10) || 0;
+        } catch (e) {}
+        return 12;
+      }
+      function saveReportCount(n) {
+        try {
+          localStorage.setItem(
+            "aseoya_report_count_" + (state.userZone || "default"),
+            String(n),
+          );
+        } catch (e) {}
+      }
+      function updateReportCountUI() {
+        var count = loadReportCount();
+        var statEl = document.querySelector("#scr-profile .stat-num");
+        if (statEl) statEl.textContent = count;
+      }
+
       function sendReport(type) {
-        toast('Reporte enviado: "' + type + '". Gracias.');
+        var count = loadReportCount() + 1;
+        saveReportCount(count);
+        updateReportCountUI();
+        toast(
+          'Reporte enviado: "' + type + '". ¡Gracias! (' + count + " reportes)",
+        );
         speak(
           "Tu reporte fue enviado. Gracias por mejorar el servicio en tu barrio.",
         );
+        var statEl = document.querySelector("#scr-profile .stat-num");
+        if (statEl) {
+          statEl.style.transform = "scale(1.4)";
+          statEl.style.color = "var(--sage)";
+          statEl.style.transition = "all .3s ease";
+          setTimeout(function () {
+            statEl.style.transform = "";
+            statEl.style.color = "";
+          }, 600);
+        }
       }
 
       /* ═══════════════════════════════════════
@@ -3513,6 +6152,19 @@
           .replace(/mode-\w+/g, "")
           .trim();
         toast("Tamaño normal restaurado");
+      }
+      function setFontNormal() {
+        document.body.className = document.body.className
+          .replace(/mode-\w+/g, "")
+          .trim();
+        toast("Letra normal activada");
+      }
+      function setFontLarge() {
+        document.body.className = document.body.className
+          .replace(/mode-\w+/g, "")
+          .trim();
+        document.body.classList.add("mode-senior");
+        toast("Letra grande activada ✓");
       }
       function applyMode(mode) {
         document.body.className = document.body.className
@@ -3540,37 +6192,190 @@
       /* ═══════════════════════════════════════
    EDIT ZONE
 ═══════════════════════════════════════ */
-      function editZone() {
-        var z = prompt("Escribe el nombre de tu barrio:", state.userZone);
-        if (z && z.trim()) {
-          state.userZone = z.trim();
-          updateUI();
-          toast("Zona actualizada: " + state.userZone);
+      function openEditZoneModal() {
+        document.getElementById("edit-city-input").value = state.userCity;
+        document.getElementById("edit-zone-input").value = state.userZone;
+        document.getElementById("edit-zone-modal").classList.add("open");
+      }
+      function closeEditZoneModal() {
+        document.getElementById("edit-zone-modal").classList.remove("open");
+      }
+      function saveEditZone() {
+        var newCity = document.getElementById("edit-city-input").value.trim();
+        var newZone = document.getElementById("edit-zone-input").value.trim();
+        if (!newZone) {
+          toast("Por favor ingresa tu barrio");
+          return;
         }
+        if (!newCity) {
+          toast("Por favor ingresa tu ciudad");
+          return;
+        }
+        state.userCity = newCity;
+        state.userZone = newZone;
+        // Update account in list
+        var acc = state.accounts.find(function (a) {
+          return a.name === state.userName;
+        });
+        if (acc) {
+          acc.zone = newZone;
+          acc.city = newCity;
+          saveAccounts(state.accounts);
+        }
+        updateUI();
+        closeEditZoneModal();
+        toast("Zona actualizada: " + newZone + ", " + newCity);
+      }
+      function editZone() {
+        openEditZoneModal();
       }
 
       /* ═══════════════════════════════════════
-   PREMIUM MODAL
+   PREMIUM MODAL — FULL PAYMENT FLOW
 ═══════════════════════════════════════ */
+      var pmSelectedPlan = "monthly";
+      var pmSelectedMethod = "nequi";
+
       function openPremiumModal() {
         document.getElementById("premium-modal").classList.add("open");
+        pmGoToPlan();
       }
       function closePremiumModal() {
         document.getElementById("premium-modal").classList.remove("open");
       }
-      function activatePremium() {
+
+      function pmGoToPlan() {
+        document.getElementById("pm-step-plan").style.display = "block";
+        document.getElementById("pm-step-payment").style.display = "none";
+        document.getElementById("pm-step-processing").style.display = "none";
+        document.getElementById("pm-step-success").style.display = "none";
+      }
+      function pmGoToPayment() {
+        var desc =
+          pmSelectedPlan === "annual"
+            ? "Plan Premium Anual · $50.000 / año"
+            : "Plan Premium Mensual · $5.000 / mes";
+        document.getElementById("pm-pay-desc").textContent = desc;
+        document.getElementById("pm-step-plan").style.display = "none";
+        document.getElementById("pm-step-payment").style.display = "block";
+        document.getElementById("pm-step-processing").style.display = "none";
+        document.getElementById("pm-step-success").style.display = "none";
+      }
+
+      function selectPmPlan(plan) {
+        pmSelectedPlan = plan;
+        document
+          .getElementById("pm-card-monthly")
+          .classList.toggle("selected", plan === "monthly");
+        document
+          .getElementById("pm-card-annual")
+          .classList.toggle("selected", plan === "annual");
+      }
+      function selectPmPayMethod(method) {
+        pmSelectedMethod = method;
+        ["nequi", "davi", "pse", "card", "transfer"].forEach(function (m) {
+          document
+            .getElementById("pmp-" + m)
+            .classList.toggle("selected", m === method);
+          var check = document
+            .getElementById("pmp-" + m)
+            .querySelector(".pay-check");
+          if (check) check.style.background = m === method ? "var(--sage)" : "";
+        });
+      }
+
+      function doPmPayment() {
+        document.getElementById("pm-step-plan").style.display = "none";
+        document.getElementById("pm-step-payment").style.display = "none";
+        document.getElementById("pm-step-processing").style.display = "block";
+        document.getElementById("pm-step-success").style.display = "none";
+
+        setTimeout(function () {
+          // Simulate payment success
+          document.getElementById("pm-step-processing").style.display = "none";
+          document.getElementById("pm-step-success").style.display = "block";
+          var label =
+            pmSelectedPlan === "annual"
+              ? "Premium Anual activado ✓"
+              : "Premium Mensual activado ✓";
+          document.getElementById("pm-success-label").textContent = label;
+        }, 2500);
+      }
+
+      function finishPremiumActivation() {
         state.isPremium = true;
+        // Persist premium status
+        var acc = state.accounts.find(function (a) {
+          return a.name === state.userName;
+        });
+        if (acc) {
+          acc.premium = true;
+          saveAccounts(state.accounts);
+        }
         closePremiumModal();
         updateUI();
-        toast("¡Premium activado! Disfruta tus beneficios.");
+        // Stop all ads completely
+        clearInterval(adTimer);
+        clearInterval(adCountdown);
+        document.getElementById("ad-overlay").style.display = "none";
+        document.getElementById("ad-top-banner").style.display = "none";
+        document.getElementById("ad-top-banner").classList.remove("show");
+        toast("¡Premium activado! Sin anuncios. Bienvenido. ⭐");
         speak(
-          "Felicitaciones. Tu cuenta Premium ha sido activada. Ahora tienes acceso a noticias exclusivas, alertas anticipadas y mucho más.",
+          "Felicitaciones. Tu cuenta Premium ha sido activada. Ya no verás publicidad y tendrás acceso completo a todas las funciones.",
         );
       }
-      function cancelPremium() {
-        state.isPremium = false;
+
+      // Legacy activatePremium (called from auth flow payment step)
+      function activatePremium() {
+        state.isPremium = true;
+        var acc = state.accounts.find(function (a) {
+          return a.name === state.userName;
+        });
+        if (acc) {
+          acc.premium = true;
+          saveAccounts(state.accounts);
+        }
+        closePremiumModal();
         updateUI();
-        toast("Suscripción Premium cancelada.");
+        clearInterval(adTimer);
+        clearInterval(adCountdown);
+        document.getElementById("ad-overlay").style.display = "none";
+        document.getElementById("ad-top-banner").style.display = "none";
+        document.getElementById("ad-top-banner").classList.remove("show");
+        toast("¡Premium activado! Disfruta tus beneficios.");
+        speak("Tu cuenta Premium ha sido activada. Ya no verás publicidad.");
+      }
+
+      /* ═══════════════════════════════════════
+   CANCEL CONFIRMATION MODAL
+═══════════════════════════════════════ */
+      function openCancelModal() {
+        document.getElementById("cancel-premium-modal").classList.add("open");
+      }
+      function closeCancelModal() {
+        document
+          .getElementById("cancel-premium-modal")
+          .classList.remove("open");
+      }
+      function confirmCancelPremium() {
+        state.isPremium = false;
+        var acc = state.accounts.find(function (a) {
+          return a.name === state.userName;
+        });
+        if (acc) {
+          acc.premium = false;
+          saveAccounts(state.accounts);
+        }
+        closeCancelModal();
+        updateUI();
+        // Restart ads after a short delay
+        setTimeout(startAdCycle, 5000);
+        toast("Suscripción cancelada. Los anuncios volverán pronto.");
+      }
+      // Keep old cancelPremium alias in case it's referenced
+      function cancelPremium() {
+        openCancelModal();
       }
 
       /* ═══════════════════════════════════════
@@ -3581,6 +6386,8 @@
           if (e.target === overlay) {
             if (overlay.id === "premium-modal") closePremiumModal();
             if (overlay.id === "voice-modal") closeVoice();
+            if (overlay.id === "edit-zone-modal") closeEditZoneModal();
+            if (overlay.id === "cancel-premium-modal") closeCancelModal();
           }
         });
       });
@@ -3611,9 +6418,338 @@
       /* ═══════════════════════════════════════
    INIT
 ═══════════════════════════════════════ */
-      updateUI();
-      // Show splash on start
-      document.getElementById("auth-splash").style.display = "flex";
+      (function () {
+        var session = loadSession();
+        if (session && session.email) {
+          var found = state.accounts.find(function (a) {
+            return a.email === session.email;
+          });
+          if (found) {
+            state.userName = found.name;
+            state.userZone = found.zone;
+            state.userCity = found.city || "";
+            state.isPremium = found.premium || false;
+            state.isLoggedIn = true;
+            // Show app directly, skip splash
+            document.getElementById("auth-splash").style.display = "none";
+            document.getElementById("status-bar").style.display = "flex";
+            document.getElementById("main-nav").style.display = "flex";
+            updateUI();
+            goTo("home");
+            if (!state.isPremium) setTimeout(startAdCycle, 8000);
+            return;
+          }
+        }
+        updateUI();
+        // Show splash on start
+        document.getElementById("auth-splash").style.display = "flex";
+      })();
+
+      /* ═══════════════════════════════════════
+   AD SYSTEM (free users only) — INTRUSIVE
+═══════════════════════════════════════ */
+      var adData = [
+        {
+          brand: "ÉXITO",
+          brandColor: "#e8000d",
+          brandBg: "#fff5f5",
+          tagline: "Supermercados Éxito",
+          headline: "2×1 en productos de aseo",
+          body: "Fabuloso, Ariel, Ajax y más. Solo este fin de semana en todas las sedes. Válido presentando la app.",
+          cta: "Ver ofertas",
+          category: "🛒 Supermercado",
+        },
+        {
+          brand: "FARMA\nCOLOMBIA",
+          brandColor: "#0057a8",
+          brandBg: "#f0f6ff",
+          tagline: "Farmacias Colombia",
+          headline: "30% en vitaminas y salud",
+          body: "Suplementos, medicamentos OTC y productos de cuidado personal con descuento toda la semana.",
+          cta: "Ir a farmacia",
+          category: "💊 Farmacia",
+        },
+        {
+          brand: "RAPPI",
+          brandColor: "#ff441f",
+          brandBg: "#fff4f0",
+          tagline: "Rappi — Domicilios",
+          headline: "Primera entrega gratis",
+          body: "Restaurantes, mercado y farmacia en 30 minutos. Usa el código ASEOYA y recibe tu primera entrega sin costo.",
+          cta: "Pedir ahora",
+          category: "🛵 Domicilios",
+        },
+        {
+          brand: "D1",
+          brandColor: "#f5a200",
+          brandBg: "#fffbf0",
+          tagline: "Tiendas D1",
+          headline: "Ahorra en tu mercado diario",
+          body: "Arroz, aceite, jabón y artículos de limpieza a los mejores precios. Encuentra tu D1 más cercano.",
+          cta: "Ver precios",
+          category: "🏪 Tienda",
+        },
+        {
+          brand: "HOMECENTER",
+          brandColor: "#e85e04",
+          brandBg: "#fff6f0",
+          tagline: "Homecenter — Sodimac",
+          headline: "Todo para el hogar con 20% off",
+          body: "Herramientas, pintura, jardín y artículos para el hogar. Descuento válido esta semana en tienda y online.",
+          cta: "Ver catálogo",
+          category: "🏠 Hogar",
+        },
+        {
+          brand: "MC\nPOLLO",
+          brandColor: "#d4a017",
+          brandBg: "#fffbf0",
+          tagline: "Restaurante MC Pollo",
+          headline: "Combo familiar por $22.900",
+          body: "Pollo apanado, papas, arroz y gaseosa para 4 personas. Pide a domicilio o recoge en tienda. ¡Solo hoy!",
+          cta: "Pedir combo",
+          category: "🍗 Restaurante",
+        },
+      ];
+      var adIndex = 0;
+      var adTimer = null;
+      var adNavCount = 0;
+      var adCountdown = null;
+
+      function startAdCycle() {
+        if (state.isPremium) return;
+        // Show top banner persistently
+        document.getElementById("ad-top-banner").classList.add("show");
+        document.getElementById("ad-top-banner").style.display = "block";
+        // First interruptive ad after 90 seconds (1.5 min) — less annoying on first use
+        setTimeout(function () {
+          if (!state.isPremium) showFullAd();
+        }, 90000);
+        // Then every 10 minutes (600000 ms)
+        adTimer = setInterval(function () {
+          if (!state.isPremium) showFullAd();
+        }, 600000);
+        // Update top banner every 30s
+        updateTopBanner();
+        setInterval(function () {
+          if (!state.isPremium) updateTopBanner();
+        }, 30000);
+      }
+
+      function updateTopBanner() {
+        if (state.isPremium) return;
+        var ad = adData[adIndex % adData.length];
+        var el = document.getElementById("top-banner-text");
+        if (el)
+          el.textContent =
+            ad.category + " · " + ad.headline + " — " + ad.tagline;
+      }
+
+      function openFullAd() {
+        if (state.isPremium) return;
+        showFullAd();
+      }
+
+      function showFullAd() {
+        if (state.isPremium) return;
+        var ad = adData[adIndex % adData.length];
+        adIndex++;
+        // Render rich ad card
+        var sheet = document.getElementById("ad-sheet");
+        sheet.innerHTML =
+          '<div style="width:40px;height:4px;border-radius:2px;background:#dce9e3;margin:0 auto 20px;"></div>' +
+          '<div style="background:' +
+          ad.brandBg +
+          ';border-radius:16px;padding:20px;margin-bottom:18px;border:1.5px solid rgba(0,0,0,0.07);">' +
+          '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">' +
+          '<div style="width:52px;height:52px;border-radius:14px;background:' +
+          ad.brandColor +
+          ';display:flex;align-items:center;justify-content:center;font-weight:900;font-size:10px;color:#fff;text-align:center;line-height:1.2;white-space:pre-line;letter-spacing:0.3px;flex-shrink:0;">' +
+          ad.brand +
+          "</div>" +
+          "<div>" +
+          '<div style="font-size:11px;font-weight:700;color:#7a9a8c;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px">Publicidad · ' +
+          ad.category +
+          "</div>" +
+          '<div style="font-size:15px;font-weight:800;color:#0f1f18;">' +
+          ad.tagline +
+          "</div>" +
+          "</div>" +
+          "</div>" +
+          '<div style="font-size:20px;font-weight:800;color:#0f1f18;margin-bottom:8px;line-height:1.2">' +
+          ad.headline +
+          "</div>" +
+          '<p style="font-size:14px;color:#3a5248;line-height:1.55;margin-bottom:16px">' +
+          ad.body +
+          "</p>" +
+          '<button style="width:100%;padding:14px;border-radius:12px;border:none;background:' +
+          ad.brandColor +
+          ';color:#fff;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;">' +
+          ad.cta +
+          " →</button>" +
+          "</div>" +
+          '<button id="ad-close-btn" onclick="closeFullAd()" style="width:100%;padding:18px;border-radius:16px;border:none;background:#dce9e3;color:#3a5248;font-size:16px;font-weight:700;font-family:inherit;cursor:not-allowed;margin-bottom:10px;transition:all .2s;">Cerrar <span id="ad-close-countdown">(espera 5s)</span></button>' +
+          '<button onclick="openPremiumModal();closeFullAd();" style="width:100%;padding:16px;border-radius:16px;border:none;background:linear-gradient(135deg,#f0c060,#c9922a);color:#7a5200;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;">⭐ Eliminar publicidad — Ver Premium</button>';
+
+        var overlay = document.getElementById("ad-overlay");
+        overlay.style.display = "flex";
+        var secs = 5;
+        var closeBtn = document.getElementById("ad-close-btn");
+        var countEl = document.getElementById("ad-close-countdown");
+        closeBtn.disabled = true;
+        closeBtn.style.cursor = "not-allowed";
+        closeBtn.style.opacity = "0.6";
+        clearInterval(adCountdown);
+        adCountdown = setInterval(function () {
+          secs--;
+          if (countEl)
+            countEl.textContent = secs > 0 ? "(espera " + secs + "s)" : "";
+          if (secs <= 0) {
+            clearInterval(adCountdown);
+            closeBtn.disabled = false;
+            closeBtn.style.cursor = "pointer";
+            closeBtn.style.opacity = "1";
+            closeBtn.style.background = "#c8f0dc";
+            closeBtn.style.color = "#0a3d2e";
+          }
+        }, 1000);
+      }
+
+      function closeFullAd() {
+        document.getElementById("ad-overlay").style.display = "none";
+        clearInterval(adCountdown);
+      }
+
+      // Trigger ad on navigation for free users (every 15 nav changes — occasional, not constant)
+      var _origGoTo = goTo;
+      goTo = function (id) {
+        _origGoTo(id);
+        if (!state.isPremium && state.isLoggedIn) {
+          adNavCount++;
+          if (adNavCount % 15 === 0) {
+            setTimeout(function () {
+              if (!state.isPremium) showFullAd();
+            }, 800);
+          }
+        }
+      };
+
+      /* ═══════════════════════════════════════
+   TUTORIAL
+═══════════════════════════════════════ */
+      var tutCurrentSlide = 0;
+      var TUT_TOTAL = 4;
+
+      function openTutorial() {
+        tutCurrentSlide = 0;
+        showTutSlide(0);
+        document.getElementById("tutorial-overlay").classList.add("open");
+      }
+
+      function tutNext() {
+        tutCurrentSlide++;
+        if (tutCurrentSlide >= TUT_TOTAL) {
+          closeTutorial();
+        } else {
+          showTutSlide(tutCurrentSlide);
+        }
+      }
+
+      function showTutSlide(idx) {
+        document.querySelectorAll(".tut-slide").forEach(function (s) {
+          s.classList.remove("active");
+        });
+        var slide = document.getElementById("tut-slide-" + idx);
+        if (slide) slide.classList.add("active");
+      }
+
+      function closeTutorial() {
+        document.getElementById("tutorial-overlay").classList.remove("open");
+        tutCurrentSlide = 0;
+      }
+
+      /* ═══════════════════════════════════════
+   ECO TIPS — auto-appear every 45s when logged in
+═══════════════════════════════════════ */
+      var ecoTips = [
+        {
+          icon: "🌱",
+          text: "Separa tus residuos: bolsa azul para reciclables (cartón, plástico, vidrio), negra para ordinarios.",
+        },
+        {
+          icon: "💧",
+          text: "Cierra bien las bolsas de basura antes de sacarlas. Evita que los líquidos contaminen el suelo.",
+        },
+        {
+          icon: "♻️",
+          text: "El cartón limpio y seco es 100% reciclable. Aplástalo para ahorrar espacio en la bolsa azul.",
+        },
+        {
+          icon: "🌍",
+          text: "Reducir, reutilizar y reciclar en ese orden. Primero intenta no generar basura innecesaria.",
+        },
+        {
+          icon: "🐾",
+          text: "Asegura bien tus bolsas de basura para evitar que animales las rompan y contaminen la calle.",
+        },
+        {
+          icon: "🌿",
+          text: "Los residuos orgánicos como cáscaras y restos de comida pueden ser compost para tus plantas.",
+        },
+        {
+          icon: "🧴",
+          text: "Los envases de plástico deben ir limpios y vacíos al reciclaje. El residuo contamina el proceso.",
+        },
+        {
+          icon: "🔋",
+          text: "Las pilas y baterías son residuo peligroso. Lllévalas a puntos de recolección especiales.",
+        },
+        {
+          icon: "📦",
+          text: "Las cajas de cartón corrugado se reciclan aparte del cartón fino. Quita el plástico primero.",
+        },
+        {
+          icon: "🚛",
+          text: "Saca la basura máximo 30 min antes de que pase el camión. Así evitas malos olores en el vecindario.",
+        },
+      ];
+      var ecoTipIndex = 0;
+      var ecoTipVisible = false;
+      var ecoTipTimer = null;
+
+      function showEcoTip() {
+        if (!state.isLoggedIn) return; // Only show when logged in
+        var tip = ecoTips[ecoTipIndex % ecoTips.length];
+        ecoTipIndex++;
+        document.getElementById("eco-tip-icon").textContent = tip.icon;
+        document.getElementById("eco-tip-text").textContent = tip.text;
+        var banner = document.getElementById("eco-tip-banner");
+        banner.classList.add("show");
+        ecoTipVisible = true;
+        // Auto-hide after 8 seconds
+        clearTimeout(ecoTipTimer);
+        ecoTipTimer = setTimeout(hideEcoTip, 8000);
+      }
+
+      function hideEcoTip() {
+        var banner = document.getElementById("eco-tip-banner");
+        if (banner) banner.classList.remove("show");
+        ecoTipVisible = false;
+        clearTimeout(ecoTipTimer);
+      }
+
+      function startEcoTipCycle() {
+        // First tip after 12 seconds
+        setTimeout(function () {
+          if (state.isLoggedIn) showEcoTip();
+        }, 12000);
+        // Then every 45 seconds
+        setInterval(function () {
+          if (state.isLoggedIn && !ecoTipVisible) showEcoTip();
+        }, 45000);
+      }
+
+      // Start eco tip cycle immediately (tips will only show after login check)
+      startEcoTipCycle();
     </script>
   </body>
 </html>
